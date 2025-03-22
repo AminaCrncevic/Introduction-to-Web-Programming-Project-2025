@@ -1,12 +1,109 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="no-js">
+
 <head>
-    <meta charset="UTF-8">
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hello World</title>
+    <title>Flower Shop</title>
+    <meta name="description" content="Your flower shop description here">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="./assets/css/style.css">
+    <link rel="stylesheet" href="./assets/css/spapp.css">
+    <link rel="stylesheet" href="./assets/css/loginpage1.css"> 
+    <link rel="stylesheet" href="./assets/css/shoppingcart.css">
+    <link rel="stylesheet" href="./assets/css/checkoutpage.css">
+    <link rel="stylesheet" href="./assets/css/productdetailpage.css">
+    <link rel="stylesheet" href="./assets/css/registrationpage.css">
+    <link rel="stylesheet" href="./assets/css/admin.css">
+    <link rel="stylesheet" href="./assets/css/successpage.css">
+
+   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> 
+    <script src="./assets/js/jquery.min.js"></script>
+    <script src="./assets/js/jquery.spapp.min.js"></script>
+    <script src="./assets/js/script.js"></script>
 </head>
+
+
+
 <body>
-    <h1>Hello, everyone!</h1>
-    <p>Welcome to Web Programming!</p>
+<!--NAGIVATION PART OR HEADER PART THAT APPEARS ON EVERY PAGE-->
+    <header>
+
+        <input type = "checkbox" name="" id="toggler">
+        <label for="toggler" class="fas fa-bars"></label>
+        <a href = "#home" class = "logo">Flower<span>Elegance</span></a>
+
+        <nav class = "navbar">
+            <a href = "#home">home</a>
+            <a href = "#about">about</a>
+            <a href = "#products">products</a>
+        </nav>
+
+        <div class = "icons">
+            <a href = "#shoppingcart" class = "fas fa-shopping-cart"></a>
+            <a href = "#loginpage1" class = "fas fa-user"></a>
+        </div>
+
+    </header>
+
+
+
+
+    <section id="pageContent">
+        <main id="spapp" role="main">
+            <section id="home" data-load="home.html">
+                <h1>Home page</h1></section>
+            <section id="checkoutpage" data-load="checkoutpage.html"></section>
+            <section id="about" data-load="about.html"></section>
+            <section id="products" data-load= "products.html"></section>
+            <section id="shoppingcart" data-load="shoppingcart.html"></section>
+            <section id="loginpage1" data-load="loginpage1.html"></section>
+            <section id="registrationpage1" data-load="registrationpage1.html"></section>
+            <section id="productDetailPage2" data-load="productDetailPage2.html"></section>
+            <section id="productDetailPage1" data-load="productDetailPage1.html"></section>
+            <section id="productDetailPage3" data-load="productDetailPage3.html"></section>
+            <section id="productDetailPage4" data-load="productDetailPage4.html"></section>
+            <section id="productDetailPage5" data-load="productDetailPage5.html"></section>
+            <section id="productDetailPage6" data-load="productDetailPage6.html"></section>
+            <section id="successpage" data-load="successpage.html"></section>
+            
+
+
+            <section id="adminUsers" data-load="adminUsers.html"></section>
+            <section id="adminPage" data-load="adminPage.html"></section>
+            <section id="adminAddFlower" data-load="adminAddFlower.html"></section>
+            <section id="adminOrders" data-load="adminOrders.html"></section>
+
+        </main>
+    </section>
+
+
+    
+    <footer>
+     <section class="footer">         
+            <div class="credit">Created By <span>Amina Crncevic</span> | all rights reserved </div>
+     </section>
+    </footer>
+
+
+    
+    <script>
+        
+        var app = $.spapp({
+            defaultView: "#home", 
+            templateDir: "./views/",
+            pageNotFound : "error_404"
+        });
+
+
+
+        
+        app.run();
+    </script>
 </body>
+
 </html>
+
+
