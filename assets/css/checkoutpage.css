@@ -1,0 +1,127 @@
+/*body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}*/
+
+.container3 {
+    font-family: Arial, sans-serif;
+    max-width: 500px;
+    margin: 50px auto;
+    background-color: white;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-top: 80px;
+    
+    
+}
+
+.order-summary, .checkout-form {
+    margin-bottom: 20px;
+}
+
+.cart-item {
+    display: inline-block;
+    margin-top: 10px;
+    text-align: left; 
+    margin-bottom: 20px;
+    padding: 10px; 
+    border: 1px solid #ddd; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+
+}
+
+.cart-item img {
+    width: 80px;
+    height: auto;
+    margin-right: 20px;
+    margin: 0 auto;
+}
+
+
+
+.checkout-form input[type="text"],
+.checkout-form input[type="email"]
+{
+    width: calc(100% - 20px); 
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-sizing: border-box;
+    background-color:#fff;
+    text-transform: none; 
+
+}
+.checkout-form input[type="text"]:hover,
+.checkout-form input[type="email"]:hover
+ {
+    background-color: #e84393; 
+}
+
+
+
+
+.proceed-btn {
+    background-color: palevioletred;
+    width:100%;
+    color: #fff;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    display: block; 
+    font-size: 13px;
+}
+
+.proceed-btn:hover {
+    background-color: pink;
+}
+.checkout-form {
+    text-align: center; 
+
+}
+
+
+
+
+.order-summary h2{
+    margin-top: 10px;
+}
+.cart-item .item-details p{
+    margin: 5px 0;
+    font-size: 16px;
+    color:#333;
+    
+}
+
+
+.item-details p {
+    margin: 5px 0;
+    font-size: 10px !important;
+    color: #333;
+}
+
+.item-details p:first-child {
+    font-weight: bold; 
+}
+
+.item-details p:last-child {
+    color: #888; 
+}
+.cart-total {
+    margin-top: 20px;
+    text-align: center;
+    font-size: 18px; 
+    color: #555; 
+    font-weight: bold; 
+}
+.container h1{
+    text-align: center;
+}
+.checkout-form h2{
+    margin-bottom: 10px;
+}

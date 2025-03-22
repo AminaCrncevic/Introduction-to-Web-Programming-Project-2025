@@ -1,0 +1,117 @@
+
+:root{
+    --pink:#e84393;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+.container2 {
+    display: block;
+    max-width: 800px;
+    margin: 100px auto;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    font-family: Arial, sans-serif;
+    margin-top: 100px;
+    justify-content: center;
+    align-items: center;
+}
+
+.cart {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 10px;
+    background-color: white;
+}
+h1{
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.cart-item {
+    display: flex;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 20px;
+}
+
+.cart-item img {
+    width: 100px;
+    height: auto;
+    margin-right: 10px;
+}
+
+.item-details {
+    flex: 1;
+}
+
+.remove1-btn {
+    background-color: var(--pink);
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    width: fit-content; 
+    max-width: 100px; 
+}
+
+.remove1-btn:hover {
+    background-color: pink;
+}
+
+.cart-total {
+    margin-top: 20px;
+    text-align: right;
+}
+
+.checkout-btn {
+    background-color: var(--pink);
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    width: fit-content;
+    max-width: 100px;
+    display: inline-block;
+    margin-top: 10px;
+    
+}
+
+.checkout-btn:hover {
+    background-color: var(--pink);
+    text-decoration: none;
+}
+.item-details h3 {
+    margin: 0;
+    font-size: 13px;
+    color: #333;
+}
+.item-details p {
+    margin: 5px 0;
+    color: #777;
+}
+/* Additional styles for quantity display */
+.quantity {
+    margin-top: 5px;
+    font-size: 10px;
+    color: #777;
+}
+
+.quantity-value {
+    font-weight: bold;
+    margin-left: 5px;
+} 
+.cart-total a{
+    font-size: 14px;
+}

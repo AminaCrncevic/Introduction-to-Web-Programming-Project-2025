@@ -1,0 +1,101 @@
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f2f2f2;
+  }
+  
+  .container {
+    max-width: 800px;
+    margin: 100px auto;
+    padding: 40px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    
+  }
+  
+  h1 {
+    text-align: center;
+    margin-bottom: 30px;
+  }
+  
+  .products {
+    margin-bottom: 30px;
+  }
+  .products h2{
+    margin-bottom: 10px;
+  }
+  
+  .product {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+  }
+  
+  .product img {
+    width: 80px;
+    height: 80px;
+    margin-right: 20px;
+    border-radius: 5px;
+  }
+  
+  .product span {
+    font-size: 18px;
+  }
+  
+  .input-group {
+    margin-bottom: 20px;
+  }
+  
+  label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+  
+  input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+  }
+  
+  button {
+    width: 100%;
+    padding: 10px;
+    background-color: palevioletred;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  button:hover {
+    background-color: pink;
+  }
+  
+  .accepted-cards {
+    margin-top: 30px;
+  }
+  
+  .accepted-cards label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: bold;
+  }
+  
+  .icon-container {
+    font-size: 40px;
+    margin-top: 10px;
+  }
+  
+  .icon-container i {
+    margin-right: 20px;
+  }
+  .product span{
+    font-size: 10px;
+  }

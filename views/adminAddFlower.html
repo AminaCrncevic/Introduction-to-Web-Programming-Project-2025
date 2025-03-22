@@ -1,0 +1,115 @@
+<main>
+    <!-- ADD FLOWERS SECTION -->
+    <section class="add-products">
+        <h1 class="title">ADD FLOWERS</h1>
+        <form id="addProductForm" method="post" enctype="multipart/form-data">
+            <h3>Add Flower</h3>
+            <input type="text" name="product_name" class="box" placeholder="Enter flower name" required>
+            <input type="text" name="product_description" class="box" placeholder="Enter flower description" required>
+            <input type="number" min="0" name="product_price" class="box" placeholder="Enter flower price" required>
+            <input type="file" name="product_image" accept="image/*" class="box" required>
+            <input type="submit" value="Add Flower" class="btn-add" 
+            style="background-color: #e84393; color: white; border: none; padding: 12px 20px; font-size: 16px; 
+            border-radius: 8px; cursor: pointer; transition: 0.3s ease-in-out; box-shadow: 2px 2px 10px rgba(0,0,0,0.2);"
+            onmouseover="this.style.backgroundColor='#ff66b2'; this.style.transform='scale(1.02x)';"
+            onmouseout="this.style.backgroundColor='pink'; this.style.transform='scale(1)';">
+        
+        </form>
+    </section>
+
+    <!-- SHOW FLOWERS SECTION -->
+    <section class="products" id="products">
+        <h1 class="heading">Latest <span> Flowers </span></h1>
+        <div class="box-container" id="productContainer">
+            <!-- Dynamically added flowers will appear here -->
+            <div class="box" id="product3">
+                <a href="product3detailpage.html">
+                <div class="image">
+                    <img src="https://fyf.tac-cdn.net/images/products/small/TEV55-6.jpg?auto=webp&quality=80&width=295" alt="">
+                    <div class="icons">
+                        
+                        <a href="shoppingcart.html" class="cart-btn">add to cart</a>
+                        <button class="wishlist-btn" data-product-id="3"><i class="fa-regular fa-heart"></i></button>
+                    </div>
+                </div></a>
+                <div class="content">
+                    <h3>Southern Peach Bouquet</h3>
+                    <div class="price"> 46$ </div>
+                </div>
+            </div>
+
+            <div class="box" id="product2">
+                <a href="#productDetailPage2">
+                <div class="image">
+                    <img src="https://fyf.tac-cdn.net/images/products/small/FYF-122.jpg?auto=webp&quality=80&width=295" alt="">
+                    <div class="icons">  
+                        <a href="shoppingcart.html" class="cart-btn">add to cart</a>
+                        <button class="wishlist-btn" data-product-id="2"><i class="fa-regular fa-heart"></i></button>
+                    </div>
+                </div></a>
+                <div class="content">
+                    <h3>Blue Skies & Sunshine</h3>
+                    <div class="price"> 33$ </div>
+                </div>
+            </div>
+
+
+            <div class="box" id="product3">
+                <a href="product3detailpage.html">
+                <div class="image">
+                    <img src="https://fyf.tac-cdn.net/images/products/small/TEV55-6.jpg?auto=webp&quality=80&width=295" alt="">
+                    <div class="icons">
+                        
+                        <a href="shoppingcart.html" class="cart-btn">add to cart</a>
+                        <button class="wishlist-btn" data-product-id="3"><i class="fa-regular fa-heart"></i></button>
+                    </div>
+                </div></a>
+                <div class="content">
+                    <h3>Southern Peach Bouquet</h3>
+                    <div class="price"> 46$ </div>
+                </div>
+            </div>
+
+
+
+            <div class="box" id="product4">
+                <a href="product4detailpage.html">
+                <div class="image">
+                    <img src="https://fyf.tac-cdn.net/images/products/small/T46-1.jpg?auto=webp&quality=80&width=295" alt="">
+                    <div class="icons">
+                        
+                        <a href="shoppingcart.html" class="cart-btn">add to cart</a>
+                        <button class="wishlist-btn" data-product-id="4"><i class="fa-regular fa-heart"></i></button>
+                        
+                    </div>
+                </div></a>
+                <div class="content">
+                    <h3>How Sweet It Is</h3>
+                    <div class="price"> 46$ </div>
+                </div>
+            </div>
+
+
+
+         <!--<div class="box" id="product5">
+                <a href="product5detailpage.html">
+                <div class="image">
+                    <img src="https://fyf.tac-cdn.net/images/products/small/FYF-131.jpg?auto=webp&quality=80&width=295" alt="">
+                    <div class="icons">
+                        <a href="shoppingcart.html" class="cart-btn">add to cart</a>
+                        <button class="wishlist-btn" data-product-id="5"><i class="fa-regular fa-heart"></i></button>
+                    </div>
+                </div></a>
+                <div class="content">
+                    <h3>Fields of Gold Mason Jar</h3>
+                    <div class="price"> 40$ </div>
+                </div>
+            </div>-->
+
+
+            <!--AND SO ON........-->
+
+
+        </div>
+    </section>
+</main>
