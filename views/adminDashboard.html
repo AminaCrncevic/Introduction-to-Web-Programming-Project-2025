@@ -1,0 +1,122 @@
+<main>
+    <!-- Admin Dashboard Section -->
+    <section class="dashboard">
+      <!--  <h1 class="title">Admin Dashboard</h1>-->
+
+        <!-- Sidebar for Navigation -->
+        <nav class="sidebar">
+            <ul>
+                <li><a href="#adminOrders">Manage Orders</a></li>
+                <li><a href="#adminUsers">Manage Users</a></li>
+                <li><a href="#adminAddFlower">Add Flowers</a></li>
+            
+            </ul>
+        </nav>
+
+        <!-- Dashboard Info Section -->
+        <div class="dashboard-info">
+            <div class="box-container">
+                <div class="box">
+                    <h3 id="pending-orders">0</h3>
+                    <p>Pending orders</p>
+                </div>
+                <div class="box">
+                    <h3 id="completed-payments">$0/-</h3>
+                    <p>Completed payments</p>
+                </div>
+                <div class="box">
+                    <h3 id="total-orders">0</h3>
+                    <p>Orders placed</p>
+                </div>
+                <div class="box">
+                    <h3 id="total-products">0</h3>
+                    <p>Products added</p>
+                </div>
+                <div class="box">
+                    <h3 id="normal-users">0</h3>
+                    <p>Normal users</p>
+                </div>
+                <div class="box">
+                    <h3 id="admin-users">0</h3>
+                    <p>Admin users</p>
+                </div>
+                <div class="box">
+                    <h3 id="total-accounts">0</h3>
+                    <p>Total accounts</p>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<!-- Add some CSS to style the sidebar and layout -->
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    .dashboard {
+        width: 100%;
+
+        margin-top: 50px;
+    }
+ 
+        .sidebar {
+        width: 250px;
+        background-color: rgb(244, 81, 163);
+        color: white;
+        padding: 20px;
+        position: fixed;
+        height: 47%;
+        top: 0;
+        left: 0;
+        box-shadow: 4px 0 6px rgba(0, 0, 0, 0.1);
+        display: flex;
+        flex-direction: column;
+        margin-top: 76px;
+    }
+
+    .sidebar ul {
+        list-style-type: none;
+        padding: 0;
+    }
+    .sidebar ul li {
+        margin: 15px 0;
+    }
+    .sidebar ul li a {
+        color: white;
+        text-decoration: none;
+        font-size: 18px;
+        transition: 0.3s;
+    }
+    .sidebar ul li a:hover {
+        color: #070707;
+    }
+    .dashboard-info {
+        margin-left: 220px;
+    }
+    .box-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+    }
+    .box {
+        background-color: white;
+        padding: 30px;
+        width: 180px;
+        text-align: center;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        border-radius: 10px;
+    }
+    .box h3 {
+        font-size: 30px;
+        margin: 0;
+    }
+    .box p {
+        font-size: 16px;
+        color: #777;
+    }
+</style>
