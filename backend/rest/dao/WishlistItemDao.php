@@ -51,6 +51,21 @@ class WishlistItemDao extends BaseDao {
         $stmt->bindParam(':newProductId', $newProductId, PDO::PARAM_INT);
         $stmt->execute();
     }
+
+
+    public function clearWishlistItems($wishlistId) {
+        $stmt = $this->connection->prepare("DELETE FROM WishlistItem WHERE Wishlist_WishlistID = :wishlistId");
+        $stmt->bindParam(':wishlistId', $wishlistId, PDO::PARAM_INT);
+        $stmt->execute();
+    }
+    
+
+
+
+
+
+
+
 }
 
 

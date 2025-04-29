@@ -43,6 +43,20 @@ class UserDao extends BaseDao {
         return $this->insert($user);  // Uses BaseDao's insert method
     }
 
+    public function addUser1($data) {
+        $stmt = $this->connection->prepare("INSERT INTO users (FirstName, LastName, email, Password, UserType) VALUES (:FirstName, :LastName, :email, :Password, :UserType)");
+        $stmt->bindParam(':FirstName', $data['FirstName'], PDO::PARAM_STR);
+        $stmt->bindParam(':LastName', $data['LastName'], PDO::PARAM_STR);
+        $stmt->bindParam(':email', $data['email'], PDO::PARAM_STR);
+        $stmt->bindParam(':Password', $data['Password'], PDO::PARAM_STR);
+        $stmt->bindParam(':UserType', $data['UserType'], PDO::PARAM_STR);
+        $stmt->execute();
+        
+        // Return the last inserted ID, which is the user ID
+        return $this->connection->lastInsertId();
+    }
+    
+
 
 }
 ?>

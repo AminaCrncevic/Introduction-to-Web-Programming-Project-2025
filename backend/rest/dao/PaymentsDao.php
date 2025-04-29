@@ -30,7 +30,7 @@ class PaymentDao extends BaseDao {
 
 
     // Update payment status (e.g., mark as completed)
-    public function updatePaymentStatus($orderId, $newStatus) {
+    public function updatePaymentStatusByOrderID($orderId, $newStatus) {
         $stmt = $this->connection->prepare("
             UPDATE Payments 
             SET PaymentStatus = :newStatus 
@@ -40,6 +40,19 @@ class PaymentDao extends BaseDao {
         $stmt->bindParam(':orderId', $orderId, PDO::PARAM_INT);
         return $stmt->execute();
     }
+
+    public function updatePaymentStatusByPaymentID($paymentId, $newStatus) {
+        $stmt = $this->connection->prepare("
+            UPDATE Payments 
+            SET PaymentStatus = :newStatus 
+            WHERE id = :paymentId
+        ");
+        $stmt->bindParam(':newStatus', $newStatus, PDO::PARAM_STR);
+        $stmt->bindParam(':paymentId', $paymentId, PDO::PARAM_INT);
+        return $stmt->execute();
+    }
+
+
 
     
     // Update payment by ID (uses BaseDao's update function)
@@ -59,17 +72,32 @@ class PaymentDao extends BaseDao {
         }
 
 
-    //DELETE PAYMENT BY ID - USE BASE DAO'S FUNCTION
-    public function delete($id)
-    {
-        return $this->delete($id);
-    }
+
+        
+        /*************** *//*DELETE PAYMENT BY ID*/ 
+        public function delete($id) {
+            $stmt = $this->connection->prepare("DELETE FROM Payments WHERE id = :id");
+            $stmt->bindParam(':id', $id);
+            $stmt->execute();
+        }
+    
+
+
 
 
     // Delete a payment for an order
     public function deletePaymentByOrderId($orderId) {
         $stmt = $this->connection->prepare("DELETE FROM Payments WHERE Orders_OrderID = :orderId");
         $stmt->bindParam(':orderId', $orderId, PDO::PARAM_INT);
+        return $stmt->execute();
+    }
+    
+
+     // Update the payment amount
+     public function updatePaymentAmount($paymentId, $amountPaid) {
+        $stmt = $this->connection->prepare("UPDATE Payments SET AmountPaid = :amountPaid WHERE id = :paymentId AND PaymentStatus = 'pending'");
+        $stmt->bindParam(':amountPaid', $amountPaid, PDO::PARAM_STR);
+        $stmt->bindParam(':paymentId', $paymentId, PDO::PARAM_INT);
         return $stmt->execute();
     }
 }

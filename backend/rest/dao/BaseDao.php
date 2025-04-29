@@ -55,5 +55,21 @@ class BaseDao {
        $stmt->bindParam(':id', $id);
        return $stmt->execute();
    }
+
+       // Begin transaction
+       public function beginTransaction() {
+        $this->connection->beginTransaction();
+    }
+
+    // Commit transaction
+    public function commit() {
+        $this->connection->commit();
+    }
+
+    // Rollback transaction
+    public function rollBack() {
+        $this->connection->rollBack();
+    }
+
 }
 ?>

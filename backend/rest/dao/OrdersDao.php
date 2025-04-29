@@ -18,10 +18,22 @@ class OrderDao extends BaseDao {
         return $this->getById($id);  // Use BaseDao's getById method
     }
 
-    // Add a new order (simple insert operation)
+    // Add a new order
     public function addOrder($order) {
         return $this->insert($order);  // Use BaseDao's insert method
     }
+    
+    public function addOrder1($orderData) {
+        $sql = "INSERT INTO orders (Users_UserID, OrderStatus) VALUES (:userId, :status)";
+        $stmt = $this->connection->prepare($sql);
+        $stmt->bindParam(':userId', $orderData['Users_UserID']);
+        $stmt->bindParam(':status', $orderData['OrderStatus']);
+        $stmt->execute();
+        
+        // Return the last inserted ID
+        return $this->connection->lastInsertId();  
+    }
+    
 
     // Update order by ID (simple update operation)
     public function updateOrder($id, $order) {
@@ -40,6 +52,14 @@ class OrderDao extends BaseDao {
         $stmt->execute();
         return $stmt->fetchAll();  // Fetch all orders for a specific user
     }
+
+        // Get a pending order for a user
+    public function getPendingOrderByUserId($userId) {
+     $stmt = $this->connection->prepare("SELECT * FROM Orders WHERE Users_UserID = :userId AND OrderStatus = 'pending'");
+    $stmt->bindParam(':userId', $userId, PDO::PARAM_INT);
+            $stmt->execute();
+            return $stmt->fetch(PDO::FETCH_ASSOC);  // Return the first row (pending order) for the user
+        }
 }
 
 
