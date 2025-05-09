@@ -52,7 +52,7 @@ print_r($orderItem);
 
 
 // Test 4: Delete an order item - WORKS!
-$orderItemIdToDelete = 15;  // Assuming OrderItemID 15 exists in the database
+$orderItemIdToDelete = 15;  
 $orderItemDao->deleteOrderItem($orderItemIdToDelete);
 echo "Test 4: Delete Order Item\n";
 echo "Deleted OrderItemID: {$orderItemIdToDelete}\n";

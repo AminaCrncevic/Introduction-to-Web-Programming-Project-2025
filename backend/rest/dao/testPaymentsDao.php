@@ -36,7 +36,7 @@ class TestPaymentsDao {
     // Test updating a payment status - WORKS!
     public function testUpdatePaymentStatus() {
         echo "Testing Update Payment Status...\n";
-        $result = $this->paymentDao->updatePaymentStatus(5, 'completed'); // Order ID 1, Status 'completed' - WORKS.
+        $result = $this->paymentDao->updatePaymentStatusByOrderID(5, 'completed'); // Order ID 1, Status 'completed' - WORKS.
         if ($result) {
             echo "Payment status updated to 'completed'.\n";
         } else {
