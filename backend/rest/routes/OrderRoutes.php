@@ -1,12 +1,17 @@
 
 <?php
-
+require_once 'vendor/autoload.php';
+require_once 'data/Roles.php';  
+require_once 'middleware/AuthMiddleware.php';  
 
 /**
  * @OA\Get(
  *     path="/orders/{userId}",
  *     tags={"orders"},
  *     summary="Get all orders for a specific user",
+ *    security={
+*      {"ApiKey": {}}
+*     },
  *     @OA\Parameter(in="path", name="userId", required=true, @OA\Schema(type="integer")),
  *     @OA\Response(response=200, description="Returns all orders for the user"),
  *  @OA\Response(
@@ -17,6 +22,12 @@
 // Get all orders for a specific user - WORKS!
 Flight::route('GET /orders/@userId', function($userId) {
     //Flight::json(Flight::orderService()->getOrdersByUserId($userId));
+    // Ensure the user is authorized for this route, only allow access if the user is an admin or the same user
+    //Flight::auth_middleware()->authorizeUserTypes([Roles::ADMIN]);
+      $user = Flight::get('user');
+    if ($user->UserType !== Roles::ADMIN && $user->id != $userId) {
+        Flight::halt(403, 'Access denied: not your orders');
+    }
     try {
         $orders = Flight::orderService()->getOrdersByUserId($userId);
         Flight::json($orders);
@@ -35,6 +46,9 @@ Flight::route('GET /orders/@userId', function($userId) {
  *     path="/orders/single/{orderId}",
  *     tags={"orders"},
  *     summary="Get a single order by order ID",
+ *   security={
+*      {"ApiKey": {}}
+*     },
  *     @OA\Parameter(in="path", name="orderId", required=true, @OA\Schema(type="integer")),
  *     @OA\Response(response=200, description="Returns the order"),
  *     @OA\Response(response=404, description="Order not found")
@@ -43,6 +57,7 @@ Flight::route('GET /orders/@userId', function($userId) {
 // Get a single order by order ID - WORKS!
 Flight::route('GET /orders/single/@orderId', function($orderId) {
     //Flight::json(Flight::orderService()->getOrderById($orderId));
+    Flight::auth_middleware()->authorizeUserTypes([Roles::ADMIN]);
     try {
         $order = Flight::orderService()->getOrderById($orderId);
         Flight::json($order);
@@ -61,6 +76,9 @@ Flight::route('GET /orders/single/@orderId', function($orderId) {
  *     path="/orders/add-item",
  *     tags={"orders"},
  *     summary="Add item to a user's pending order",
+ *    security={
+*      {"ApiKey": {}}
+*     },
  *     @OA\RequestBody(
  *         @OA\JsonContent(
  *             required={"user_id", "product_id", "quantity"},
@@ -76,7 +94,16 @@ Flight::route('GET /orders/single/@orderId', function($orderId) {
  */
 // Add item to a user's pending order - WORKS!
 Flight::route('POST /orders/add-item', function() {
+
+    //$token = Flight::request()->getHeader('Authorization');
+    //Flight::auth_middleware()->verifyToken($token);
+    Flight::auth_middleware()->authorizeUserTypes([Roles::USER, Roles::ADMIN]); 
+
     $data = Flight::request()->data->getData();
+    if (Flight::get('user')->id != $data['user_id']) {
+        Flight::halt(403, 'Access denied: not your account');
+    }
+
    try {
     Flight::orderService()->addItemToOrder($data['user_id'], $data['product_id'], $data['quantity']);
     Flight::json(["message" => "Item added to order."]);
@@ -94,6 +121,9 @@ Flight::route('POST /orders/add-item', function() {
  *     path="/orders/remove-item/{orderItemId}/{userId}",
  *     tags={"orders"},
  *     summary="Remove an item from a user's order",
+ *   security={
+*      {"ApiKey": {}}
+*     },
  *     @OA\Parameter(in="path", name="orderItemId", required=true, @OA\Schema(type="integer")),
  *     @OA\Parameter(in="path", name="userId", required=true, @OA\Schema(type="integer")),
  *     @OA\Response(response=200, description="Item removed from order"),
@@ -104,6 +134,10 @@ Flight::route('POST /orders/add-item', function() {
 Flight::route('DELETE /orders/remove-item/@orderItemId/@userId', function($orderItemId, $userId) {
     //Flight::orderService()->removeItemFromOrder($orderItemId, $userId);
     //Flight::json(["message" => "Item removed from order."]);
+    Flight::auth_middleware()->authorizeUserTypes([Roles::USER, Roles::ADMIN]);  // Ensure the user is allowed to remove items
+    if (Flight::get('user')->id != $userId) {
+        Flight::halt(403, 'Access denied: not your order');
+    }
     try {
         Flight::orderService()->removeItemFromOrder($orderItemId, $userId);
         Flight::json(["message" => "Item removed from order."]);
@@ -122,6 +156,9 @@ Flight::route('DELETE /orders/remove-item/@orderItemId/@userId', function($order
  *     path="/orders/update-item",
  *     tags={"orders"},
  *     summary="Update quantity of an item in the user's order",
+ *   security={
+*      {"ApiKey": {}}
+*     },
  *     @OA\RequestBody(
  *         @OA\JsonContent(
  *             required={"order_item_id", "new_quantity", "user_id"},
@@ -137,7 +174,14 @@ Flight::route('DELETE /orders/remove-item/@orderItemId/@userId', function($order
  */
 // Update quantity of an item in the user's order - WORKS!
 Flight::route('PUT /orders/update-item', function() {
+   Flight::auth_middleware()->authorizeUserTypes([Roles::USER], Roles::ADMIN);
+
     $data = Flight::request()->data->getData();
+    
+    if (Flight::get('user')->id != $data['user_id']) {
+        Flight::halt(403, 'Access denied: not your order');
+    }
+
     Flight::orderService()->updateItemQuantity($data['order_item_id'], $data['new_quantity'], $data['user_id']);
     Flight::json(["message" => "Item quantity updated."]);
 });
@@ -154,6 +198,9 @@ Flight::route('PUT /orders/update-item', function() {
  *      path="/orders/pending-items/{userId}",
  *      tags={"orders"},
  *      summary="Get all items in the user's pending order",
+ *   security={
+*      {"ApiKey": {}}
+*     },
  *      @OA\Parameter(
  *          in="path", 
  *          name="userId", 
@@ -173,6 +220,12 @@ Flight::route('PUT /orders/update-item', function() {
 // Get all items in the user's pending order - WORKS!
 Flight::route('GET /orders/pending-items/@userId', function($userId) {
    // Flight::json(Flight::orderService()->getPendingOrderItems($userId));
+
+    Flight::auth_middleware()->authorizeUserTypes([Roles::USER, Roles::ADMIN]);
+    if (Flight::get('user')->id != $userId) {
+        Flight::halt(403, 'Access denied: not your pending order');
+    }
+
    try {
     $items = Flight::orderService()->getPendingOrderItems($userId);
     Flight::json($items);
@@ -189,6 +242,9 @@ Flight::route('GET /orders/pending-items/@userId', function($userId) {
  *     path="/orders/complete/{orderId}/{userId}",
  *     tags={"orders"},
  *     summary="Finalize (complete) an order",
+ *   security={
+*      {"ApiKey": {}}
+*     },
  *     @OA\Parameter(in="path", name="orderId", required=true, @OA\Schema(type="integer")),
  *     @OA\Parameter(in="path", name="userId", required=true, @OA\Schema(type="integer")),
  *     @OA\Response(response=200, description="Order completed successfully"),
@@ -199,8 +255,11 @@ Flight::route('GET /orders/pending-items/@userId', function($userId) {
 // Finalize (complete) an order - WORKS! -When user clicks pay first will be order finalized and then payment for that order;they will
 //be marked as completed and new pendind order and payment will be created.
 Flight::route('PUT /orders/complete/@orderId/@userId', function($orderId, $userId) {
-   // Flight::orderService()->completeOrder($orderId, $userId);
-    //Flight::json(["message" => "Order completed successfully."]);
+    Flight::auth_middleware()->authorizeUserTypes([Roles::USER, Roles::ADMIN]);
+    if (Flight::get('user')->UserType !== Roles::ADMIN && Flight::get('user')->id != $userId) {
+        Flight::halt(403, 'Access denied: not your order');
+    }
+
     try {
         Flight::orderService()->completeOrder($orderId, $userId);
         Flight::json(["message" => "Order completed successfully."]);
@@ -219,6 +278,9 @@ Flight::route('PUT /orders/complete/@orderId/@userId', function($orderId, $userI
  *      path="/orders/pending-or-create/{userId}",
  *      tags={"orders"},
  *      summary="Ensure a pending order exists or create one for a user",
+ *   security={
+*      {"ApiKey": {}}
+*     },
  *      @OA\Parameter(
  *          in="path", 
  *          name="userId", 
@@ -237,7 +299,11 @@ Flight::route('PUT /orders/complete/@orderId/@userId', function($orderId, $userI
 
 // Ensure a pending order exists or create one for a user -WORKS!
 Flight::route('GET /orders/pending-or-create/@userId', function($userId) {
- //   Flight::json(Flight::orderService()->getOrCreatePendingOrder($userId));
+  Flight::auth_middleware()->authorizeUserTypes([Roles::USER, Roles::ADMIN]);
+  if (Flight::get('user')->id != $userId) {
+        Flight::halt(403, 'Access denied: not your account');
+    }
+
  try {
     $order = Flight::orderService()->getOrCreatePendingOrder($userId);
     Flight::json($order);

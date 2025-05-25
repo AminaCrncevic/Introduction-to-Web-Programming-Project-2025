@@ -10,7 +10,7 @@ class UserDao extends BaseDao {
 
     // Get user by email - EMAIL SHOULD BE UNIQUE - ATTEMPTING TO ADD NEW USER WITH SAME EMAIL RESULTS IN ERROR
     public function getByEmail($email) {
-        $stmt = $this->connection->prepare("SELECT * FROM " . $this->table . " WHERE email = :email");
+        $stmt = $this->connection->prepare("SELECT * FROM users WHERE email = :email");
         $stmt->bindParam(':email', $email);
         $stmt->execute();
         return $stmt->fetch(); //Fetches a single user by email

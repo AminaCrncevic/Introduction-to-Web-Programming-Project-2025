@@ -63,7 +63,7 @@ class UserService extends BaseService {
 
         // Set user type if not provided
         if (empty($data['UserType'])) {
-            $data['UserType'] = 'customer';
+            $data['UserType'] = 'user';
         }
 
         // Add the user to the database

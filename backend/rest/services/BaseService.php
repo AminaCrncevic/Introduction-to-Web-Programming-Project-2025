@@ -22,4 +22,19 @@ class BaseService {
    public function delete($id) {
        return $this->dao->delete($id);
    }
+   /*ADDED METHODS FOR MILESTONE 4*/
+
+    public function add($entity)
+    {
+        return $this->dao->add($entity);
+    }
+
+
+ public function update1($entity, $id, $id_column = "id")
+    {
+        return $this->dao->update($entity, $id, $id_column);
+    }
+
+
+    /************************************************ */
 }

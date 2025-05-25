@@ -1,0 +1,34 @@
+<!-- account.html -->
+<div id="account-container" class="account-page">
+  <h2>My Account</h2>
+
+  <div id="user-info">
+    <p><strong>First Name:</strong> <span id="first-name"></span></p>
+    <p><strong>Last Name:</strong> <span id="last-name"></span></p>
+    <p><strong>Email:</strong> <span id="email"></span></p>
+    <p><strong>User Type:</strong> <span id="user-type"></span></p>
+  </div>
+
+  <h3>Edit Info</h3>
+  <form id="update-form">
+    <input type="text" id="new-first-name" placeholder="New First Name">
+    <input type="text" id="new-last-name" placeholder="New Last Name">
+    <button type="submit">Update Info</button>
+  </form>
+
+  <button id="delete-account" style="color: white;">Delete My Account</button>
+  <button id="logout">Logout</button>
+</div>
+
+<link href="https://cdn.jsdelivr.net/npm/toastr@2.1.4/build/toastr.min.css" rel="stylesheet">
+<script src="/Introduction-to-Web-Programming-Project-2025/assets/js/jquey.validate.min.js"></script>
+<script src="/Introduction-to-Web-Programming-Project-2025/assets/services/user-service.js"></script>
+<script src="/Introduction-to-Web-Programming-Project-2025/assets/utils/constants.js"></script>
+<script src="/Introduction-to-Web-Programming-Project-2025/assets/services/account-service.js"></script>
+<script>
+    $(document).ready(function () {
+        AccountService.init();
+    });
+</script>
+
+
