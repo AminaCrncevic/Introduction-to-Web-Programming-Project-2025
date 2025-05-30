@@ -62,13 +62,16 @@ class PaymentDao extends BaseDao {
 
     // Get all payments (uses BaseDao's getAll method)
     public function getAll() {
-        return $this->getAll(); 
+      //  return $this->getAll(); 
+          return parent::getAll(); 
+
     }
 
       // Get payment details by Payment ID (uses BaseDao's getById method)
       public function getById($id)
        {
-        return $this->getById($id);  // Calls BaseDao's getById method
+      //  return $this->getById($id);  // Calls BaseDao's getById method
+      return parent::getById($id);
         }
 
 

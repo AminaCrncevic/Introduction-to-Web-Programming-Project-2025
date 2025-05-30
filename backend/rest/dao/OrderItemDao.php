@@ -20,10 +20,28 @@ public function getAllOrderItems() {
 public function getOrderItemById($id) {
     return $this->getById($id);  // Inherits the getById() from BaseDao
 }
+public function getOrderItemById1($id) {
+    $stmt = $this->connection->prepare("SELECT oi.*, o.Users_UserID 
+                                        FROM orderitem oi 
+                                        JOIN orders o ON oi.Orders_OrderID = o.id 
+                                        WHERE oi.id = ?");
+    $stmt->execute([$id]);
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    // Add logging or debugging output
+    if ($result) {
+        error_log("Order Item Found: " . print_r($result, true));  // Log result
+    } else {
+        error_log("No Order Item Found for ID: " . $id);  // Log when not found
+    }
+
+    return $result;
+}
+
 
 // Get order items by OrderID - for specific order
 public function getOrderItemsByOrderId($orderId) {
-$stmt = $this->connection->prepare("SELECT * FROM " . $this->table . " WHERE Orders_OrderID = :orderId");
+$stmt = $this->connection->prepare("SELECT * FROM OrderItem WHERE Orders_OrderID = :orderId");
 $stmt->bindParam(':orderId', $orderId);
 $stmt->execute();
 return $stmt->fetchAll(); 
@@ -64,7 +82,7 @@ public function deleteOrderItem($orderItemId) {
 // Get a specific item by OrderID and ProductID
 public function getItemByOrderAndProduct($orderId, $productId) {
     $stmt = $this->connection->prepare("
-        SELECT * FROM " . $this->table . " 
+        SELECT * FROM OrderItem 
         WHERE Orders_OrderID = :orderId AND Products_ProductID = :productId
     ");
     $stmt->bindParam(':orderId', $orderId);

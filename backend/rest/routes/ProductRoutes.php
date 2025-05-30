@@ -1,12 +1,17 @@
 
 <?php
-
+require_once 'vendor/autoload.php';
+require_once 'data/Roles.php';  // Include the Roles class
+require_once 'middleware/AuthMiddleware.php';  // Include the AuthMiddleware
 
 /**
  * @OA\Get(
  *     path="/product/{id}",
  *     tags={"products"},
  *     summary="Get a specific product by ID",
+ * security={
+    *         {"ApiKey": {}}
+    *     },
  *     @OA\Parameter(
  *         name="id",
  *         in="path",
@@ -27,6 +32,7 @@
 
 // Get a specific product by ID - GET - WORKS!
 Flight::route('GET /product/@id', function($id){
+    Flight::auth_middleware()->authorizeUserTypes([Roles::ADMIN, Roles::USER]);
     try{ 
     Flight::json(Flight::productService()->getProduct($id));
 } catch (Exception $e) {
@@ -43,6 +49,9 @@ Flight::route('GET /product/@id', function($id){
  *     path="/product",
  *     tags={"products"},
  *     summary="Get all products",
+ * security={
+    *         {"ApiKey": {}}
+    *     },
  *     @OA\Response(
  *         response=200,
  *         description="Returns all products"
@@ -52,6 +61,7 @@ Flight::route('GET /product/@id', function($id){
 
 // Get all products 
 Flight::route('GET /product', function(){
+    Flight::auth_middleware()->authorizeUserTypes([Roles::ADMIN, Roles::USER]);
     Flight::json(Flight::productService()->getAllProducts());
 });
 
@@ -66,6 +76,9 @@ Flight::route('GET /product', function(){
  *     path="/product",
  *     tags={"products"},
  *     summary="Create a new product",
+ * security={
+    *         {"ApiKey": {}}
+    *     },
  *     @OA\RequestBody(
  *         required=true,
  *         @OA\JsonContent(
@@ -89,6 +102,7 @@ Flight::route('GET /product', function(){
 
 // Add a new product - WORKS! -POST
 Flight::route('POST /product', function(){
+    Flight::auth_middleware()->authorizeUserTypes([Roles::ADMIN]);
     $data = Flight::request()->data->getData();
     try {
         $product = Flight::productService()->createProduct($data);
@@ -110,6 +124,9 @@ Flight::route('POST /product', function(){
  *     path="/product/{id}",
  *     tags={"products"},
  *     summary="Update a product completely",
+ * security={
+    *         {"ApiKey": {}}
+    *     },
  *     @OA\Parameter(
  *         name="id",
  *         in="path",
@@ -140,6 +157,7 @@ Flight::route('POST /product', function(){
 
 // Update a product fully (PUT) -WORKS
 Flight::route('PUT /product/@id', function($id){
+    Flight::auth_middleware()->authorizeUserTypes([Roles::ADMIN]);
     $data = Flight::request()->data->getData();
     try {
         $product = Flight::productService()->updateProduct($id, $data);
@@ -159,6 +177,9 @@ Flight::route('PUT /product/@id', function($id){
  *     path="/product/{id}",
  *     tags={"products"},
  *     summary="Partially update a product",
+ * security={
+    *         {"ApiKey": {}}
+    *     },
  *     @OA\Parameter(
  *         name="id",
  *         in="path",
@@ -188,6 +209,7 @@ Flight::route('PUT /product/@id', function($id){
 
 // Partial update (PATCH) — optional to implement
 Flight::route('PATCH /product/@id', function($id){
+    Flight::auth_middleware()->authorizeUserTypes([Roles::ADMIN]);
     $data = Flight::request()->data->getData();
     try {
         
@@ -209,6 +231,9 @@ Flight::route('PATCH /product/@id', function($id){
  *     path="/product/{id}",
  *     tags={"products"},
  *     summary="Delete a product by ID",
+ * security={
+    *         {"ApiKey": {}}
+    *     },
  *     @OA\Parameter(
  *         name="id",
  *         in="path",
@@ -225,6 +250,7 @@ Flight::route('PATCH /product/@id', function($id){
 
 // Delete a product
 Flight::route('DELETE /product/@id', function($id){
+     Flight::auth_middleware()->authorizeUserTypes([Roles::ADMIN]);
     Flight::json(Flight::productService()->deleteProduct($id));
 });
 

@@ -1,11 +1,16 @@
 
 <?php
-
+require_once 'vendor/autoload.php';
+require_once 'data/Roles.php';  // Include the Roles class
+require_once 'middleware/AuthMiddleware.php';  // Include the AuthMiddleware
 /**
  * @OA\Get(
  *     path="/users",
  *     tags={"users"},
  *     summary="Get all users",
+ * security={
+    *         {"ApiKey": {}}
+    *     },
  *     @OA\Response(
  *         response=200,
  *         description="Returns a list of all users"
@@ -15,7 +20,8 @@
 
 // Get all users - WORKS!
 Flight::route('GET /users', function(){
-    Flight::json(Flight::userService()->getAllUsers());
+    Flight::auth_middleware()->authorizeUserTypes([Roles::ADMIN]);
+     Flight::json(Flight::userService()->getAllUsers());
 });
 
 
@@ -32,6 +38,9 @@ Flight::route('GET /users', function(){
  *     path="/user/{id}",
  *     tags={"users"},
  *     summary="Get a specific user by ID",
+ * security={
+    *         {"ApiKey": {}}
+    *     },
  *     @OA\Parameter(
  *         name="id",
  *         in="path",
@@ -43,6 +52,10 @@ Flight::route('GET /users', function(){
  *         response=200,
  *         description="Returns the user details"
  *     ),
+ *   @OA\Response(
+ *         response=403,
+ *         description="Forbidden: Access denied"
+ *     ),
  *     @OA\Response(
  *         response=404,
  *         description="User not found"
@@ -52,6 +65,13 @@ Flight::route('GET /users', function(){
 
 // Get user by ID - WORKS!
 Flight::route('GET /user/@id', function($id){
+        Flight::auth_middleware()->authorizeUserTypes([Roles::ADMIN, Roles::USER]);
+              $user = Flight::get('user');
+ // Only allow if the requester is the same user or an admin
+        if ($user->UserType !== Roles::ADMIN && $user->id != $id) {
+            Flight::json(['error' => 'Forbidden: You are not allowed to access this resource.'], 403);
+            return;
+    }
     try {
         Flight::json(Flight::userService()->getUser($id));
     } catch (Exception $e) {
@@ -71,13 +91,14 @@ Flight::route('GET /user/@id', function($id){
 
 
 
-
-
 /**
  * @OA\Post(
  *     path="/user",
  *     tags={"users"},
  *     summary="Create a new user (register)",
+ * security={
+    *         {"ApiKey": {}}
+    *     },
  *     @OA\RequestBody(
  *         required=true,
  *         @OA\JsonContent(
@@ -100,10 +121,11 @@ Flight::route('GET /user/@id', function($id){
  * )
  */
 
-// Create new user (register) - WORKS!
+ //Create new user (register) - WORKS!
 Flight::route('POST /user', function(){
-    $data = Flight::request()->data->getData();
-    try {
+    Flight::auth_middleware()->authorizeUserTypes([Roles::ADMIN, Roles::USER]);
+   $data = Flight::request()->data->getData();
+   try {
         $userId = Flight::userService()->createUser($data);
         Flight::json(['user_id' => $userId], 201);
     } catch (Exception $e) {
@@ -122,6 +144,9 @@ Flight::route('POST /user', function(){
  *     path="/user/{id}",
  *     tags={"users"},
  *     summary="Update a user completely",
+ * security={
+    *         {"ApiKey": {}}
+    *     },
  *     @OA\Parameter(
  *         name="id",
  *         in="path",
@@ -153,6 +178,8 @@ Flight::route('POST /user', function(){
 
 // Update user completely - WORKS!
 Flight::route('PUT /user/@id', function($id){
+    Flight::auth_middleware()->authorizeUserTypes([Roles::ADMIN]);
+
     $data = Flight::request()->data->getData();
     Flight::json(Flight::userService()->updateUser($id, $data));
 });
@@ -165,6 +192,9 @@ Flight::route('PUT /user/@id', function($id){
  *     path="/user/{id}",
  *     tags={"users"},
  *     summary="Partially update a user (e.g., only name)",
+ * security={
+    *         {"ApiKey": {}}
+    *     },
  *     @OA\Parameter(
  *         name="id",
  *         in="path",
@@ -192,7 +222,20 @@ Flight::route('PUT /user/@id', function($id){
 
 // Partially update user (e.g., only name) - WORKS!
 Flight::route('PATCH /user/@id', function($id){
-    $data = Flight::request()->data->getData();
+     Flight::auth_middleware()->authorizeUserTypes([Roles::ADMIN, Roles::USER]);
+      $user = Flight::get('user');
+       $data = Flight::request()->data->getData();
+
+ // Only allow if the requester is the same user or an admin
+ if ($user->UserType !== Roles::ADMIN && (int)$user->id != (int)$id) {
+     Flight::json(['error' => 'Forbidden: You are not allowed to access this resource.'], 403);
+     return;
+    }
+$data = array_change_key_case($data, CASE_LOWER);
+if ($user->UserType !== Roles::ADMIN) {
+    unset($data['usertype'], $data['email'], $data['password']);
+}
+ 
     Flight::json(Flight::userService()->updateUser($id, $data)); 
 });
 
@@ -206,6 +249,9 @@ Flight::route('PATCH /user/@id', function($id){
  *     path="/user/{id}",
  *     tags={"users"},
  *     summary="Delete a user by ID",
+ * *  security={
+*      {"ApiKey": {}}
+*     },
  *     @OA\Parameter(
  *         name="id",
  *         in="path",
@@ -226,6 +272,7 @@ Flight::route('PATCH /user/@id', function($id){
 
 // Delete user - WORKS!
 Flight::route('DELETE /user/@id', function($id){
+    Flight::auth_middleware()->authorizeUserTypes([Roles::ADMIN, Roles::USER]);
     try {
         Flight::userService()->deleteUser($id);
         Flight::json(["message" => "User deleted successfully."]);
@@ -244,6 +291,9 @@ Flight::route('DELETE /user/@id', function($id){
  *     path="/user/login",
  *     tags={"users"},
  *     summary="User login",
+ * security={
+    *         {"ApiKey": {}}
+    *     },
  *     @OA\RequestBody(
  *         required=true,
  *         @OA\JsonContent(
@@ -265,6 +315,7 @@ Flight::route('DELETE /user/@id', function($id){
 
 // User login - WORKS!
 Flight::route('POST /user/login', function(){
+    Flight::auth_middleware()->authorizeUserTypes([Roles::ADMIN, Roles::USER]);
     try {
         $data = Flight::request()->data->getData();
         $user = Flight::userService()->login($data['email'], $data['Password']);

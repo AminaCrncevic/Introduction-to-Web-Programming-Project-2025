@@ -80,7 +80,14 @@ class WishlistItemService extends BaseService {
         if (!$wishlist) {
             throw new Exception("Wishlist not found.");
         }
-        $this->dao->clearWishlistItems($wishlist['id']);
+      
+      $this->dao->clearWishlistItems($wishlist['id']);
     }
+
+   //  public function getItemById($id) {
+        // Implement the logic to fetch the wishlist item by ID
+        // You can use the DAO layer to fetch the item from the database
+     //   return $this->dao->getById($id);
+    //}
 
 }

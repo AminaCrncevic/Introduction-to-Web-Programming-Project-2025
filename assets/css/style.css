@@ -70,6 +70,26 @@ header .navbar a{
 
 }
 
+
+header .navbar {
+    display:flex;
+    align-items:center;
+}
+header .navbar ul{
+    display:flex;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    align-items:center;
+}
+header .navbar ul li{
+    margin-right: 3rem;
+    
+}
+
+
+
+
 header .navbar a:hover{
     color:var(--pink);
 }
@@ -452,6 +472,238 @@ margin-top: 10px;
   .dropdown:hover .dropbtn {
     background-color: pink;
   }
+  /**************************/
+.user-dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.user-dropdown .dropdown-menu {
+  display: none;
+  position: absolute;
+  right: 0;
+  background-color: white;
+  min-width: 140px;
+  box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+  z-index: 1;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.user-dropdown .dropdown-menu a {
+  color: #333;
+  padding: 10px 14px;
+  text-decoration: none;
+  display: block;
+  font-size: 14px;
+}
+
+.user-dropdown .dropdown-menu a:hover {
+  background-color: #f0f0f0;
+}
+
+/**********************************ACCOUNT PAGE CSS ************************************/
+/* General Page Layout */
+body {
+    /*font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;*/
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    background: #fff0f6;
+    margin: 0;
+    padding: 0;
+}
+
+.account-page {
+    max-width: 600px;
+    /*margin: 40px auto;*/
+    margin: 100px auto 80px auto; /* Added top margin */
+    padding: 30px;
+    background-color: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 8px 16px rgba(255, 105, 180, 0.1);
+    border: 1px solid #ffd1e3;
+}
+
+/* Headings */
+.account-page h2 {
+    color: var(--pink);
+    margin-bottom: 20px;
+    font-size: 28px;
+    border-bottom: 2px solid #f8d7da;
+    padding-bottom: 10px;
+}
+
+.account-page h3 {
+    color: var(--pink);
+    margin-top: 30px;
+    font-size: 22px;
+}
+
+/* User Info */
+#user-info p {
+    margin: 10px 0;
+    font-size: 16px;
+}
+
+#user-info strong {
+    color: var(--pink);
+}
+#email {
+  text-transform: none;
+}
+
+/* Form Styles */
+#update-form {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    text-align: center;
+}
+
+#update-form input {
+    padding: 10px;
+    border: 1px solid #ffb6c1;
+    border-radius: 10px;
+    outline: none;
+    font-size: 16px;
+}
+
+#update-form input:focus {
+    border-color: #ff69b4;
+    box-shadow: 0 0 4px #ff69b4aa;
+}
+
+#update-form button {
+    padding: 10px;
+    background-color: #ff69b4;
+    width: 200px;
+    
+    
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+#update-form button:hover {
+    background-color: #e0559e;
+}
+
+/* Action Buttons */
+#delete-account, #logout {
+    margin-top: 20px;
+    padding: 10px;
+    width: 200px;
+    font-size: 16px;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+#delete-account {
+    background-color: #ff69b4;
+    color: white;
+}
+
+#delete-account:hover {
+    background-color: #cc0000;
+}
+
+#logout {
+    background-color: #ff69b4;
+    color: white;
+    margin-top: 10px;
+}
+
+#logout:hover {
+    background-color: #e0559e;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+    .account-page {
+        margin: 20px;
+        padding: 20px;
+    }
+
+    #update-form button,
+    #delete-account,
+    #logout {
+        font-size: 14px;
+        padding: 8px;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/************************************************************************************************/
+/*************************ADMIN DASHBOARD CSS ***********************************/
+  /*
+    .dashboard {
+        width: 100%;
+
+        margin-top: 50px;
+    }
+ 
+
+
+  
+    
+    .box-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+    }
+    .box {
+        background-color: white;
+        padding: 30px;
+        width: 180px;
+        text-align: center;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        border-radius: 10px;
+    }
+    .box h3 {
+        font-size: 30px;
+        margin: 0;
+    }
+    .box p {
+        font-size: 16px;
+        color: #777;
+    }*/
+
+
+
+
+
+
+
+
+/***********************************************************************************************/
 
 /* media queries */
 @media (max-width:991px) {

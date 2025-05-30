@@ -47,7 +47,7 @@ class OrderDao extends BaseDao {
 
     // Get orders by user ID
     public function getOrdersByUserId($userId) {
-        $stmt = $this->connection->prepare("SELECT * FROM " . $this->table . " WHERE Users_UserID = :userId");
+        $stmt = $this->connection->prepare("SELECT * FROM Orders WHERE Users_UserID = :userId");
         $stmt->bindParam(':userId', $userId);
         $stmt->execute();
         return $stmt->fetchAll();  // Fetch all orders for a specific user

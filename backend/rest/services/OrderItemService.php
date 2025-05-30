@@ -62,4 +62,15 @@ class OrderItemService extends BaseService {
         $newOrderId = $this->orderDao->addOrder($newOrder);
         return $this->orderDao->getOrderById($newOrderId);
     }
+
+
+
+    
+    public function getOrderItemById($orderItemId) {
+    return $this->dao->getOrderItemById($orderItemId);
+}
+  public function getOrderItemById1($orderItemId) {
+    return $this->dao->getOrderItemById1($orderItemId);
+}
+
 }
