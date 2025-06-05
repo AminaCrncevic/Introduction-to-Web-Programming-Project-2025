@@ -1,16 +1,52 @@
-<main>
-    <section class="users">
-        <h1 class="title">User Accounts</h1>
-     
-        <div class="box-container">
-           <!-- User Account Box 1 -->
-           <div class="box">
-              <p>user id : <span></span></p>  
-              <p>email : <span> </span></p>
-              <p>user type : <span>User Type</span></p>
-              <!-- Delete Button -->
-              <a href="#" class="delete-btn">Delete User</a>
-           </div>
-        </div>
-     </section>
-</main>
+<form id="manage-users-form">
+  <h2 style="color:#cc0066; text-align:center; margin-bottom: 20px;">Manage User</h2>
+
+  <label for="user-id">User ID</label>
+  <input type="number" id="user-id" name="userId" min="1" required placeholder="Enter user ID to fetch" />
+
+  <button type="button" id="fetch-user-btn">Fetch User Data</button>
+
+  <label for="first-name">First Name</label>
+  <input type="text" id="first-name" name="first-name" minlength="2" required placeholder="User's first name" disabled />
+
+  <label for="last-name">Last Name</label>
+  <input type="text" id="last-name" name="last-name" minlength="2" required placeholder="User's last name" disabled />
+
+  <label for="user-type1">User Type</label>
+  <select id="user-type1" name="UserType" >
+    <option value="">-- Select User Type --</option>
+    <option value="user">user</option>
+    <option value="admin">admin</option>
+  </select>
+
+  <button type="submit" id="update-user-btn" disabled>Update User</button>
+<button type="button" id="delete-user-btn" disabled style="background-color:#ff4d4d; color:white; margin-top:10px;">
+  Delete User
+</button>
+</form>
+
+
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+
+<!-- jQuery Validation -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
+
+<!-- jQuery BlockUI -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.blockUI/2.70/jquery.blockUI.min.js"></script>
+
+<!-- Toastr -->
+<link href="https://cdn.jsdelivr.net/npm/toastr@2.1.4/build/toastr.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/toastr@2.1.4/build/toastr.min.js"></script>
+
+
+<script src="/Introduction-to-Web-Programming-Project-2025/assets/services/admin-dashboard.js"></script>
+<script src="/Introduction-to-Web-Programming-Project-2025/assets/utils/constants.js"></script>
+<script src="/Introduction-to-Web-Programming-Project-2025/assets/services/account-service.js"></script>
+<script>
+   $(document).ready(function () {
+
+    AdminDashboard.init();
+  
+});
+</script>

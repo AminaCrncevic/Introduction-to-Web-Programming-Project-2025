@@ -55,7 +55,6 @@
 -->
     <div class="icons" id="header-icons"></div>
 
-
     </header>
 
     <main id="spapp" role="main">
@@ -85,7 +84,7 @@
 
             if (user && user.UserType) {
                 UserService.generateMenuItems(user);
-                // defaultView = "#home";
+                
                 
                 //default view based on role
                 if (user.UserType === Constants.ADMIN_ROLE) {

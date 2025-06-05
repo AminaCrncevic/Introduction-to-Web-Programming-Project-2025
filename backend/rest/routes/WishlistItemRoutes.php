@@ -1,7 +1,7 @@
 <?php
 require_once 'vendor/autoload.php';
-require_once 'data/Roles.php';  // Include the Roles class
-require_once 'middleware/AuthMiddleware.php';  // Include the AuthMiddleware
+require_once 'data/roles.php';  
+require_once 'middleware/AuthMiddleware.php';  
 
 /**
  * @OA\Get(
@@ -55,14 +55,13 @@ Flight::route('GET /wishlistitems/@userId', function($userId) {
 Flight::route('POST /wishlistitems', function() {
     Flight::auth_middleware()->authorizeUserTypes([Roles::ADMIN, Roles::USER]);
     $data = Flight::request()->data->getData();
- $user = Flight::get('user'); // The authenticated user
- // Enforce that only the wishlist owner or an admin can add items
+ $user = Flight::get('user'); 
+ 
     if ($user->UserType !== Roles::ADMIN && $user->id != $data['user_id']) {
         Flight::json(['error' => 'Forbidden: You are not allowed to modify this wishlist.'], 403);
         return;
     }
    try {
-   // $data = Flight::request()->data->getData();
     Flight::wishlistItemService()->addItemToWishlist($data['user_id'], $data['product_id']);
     Flight::json(["message" => "Product added to wishlist"], 200); 
 } catch (Exception $e) {
@@ -94,7 +93,7 @@ Flight::route('DELETE /wishlistitems/@id', function($id) {
     Flight::auth_middleware()->authorizeUserTypes([Roles::ADMIN, Roles::USER]);
     $user = Flight::get('user');
        try {
-        // Get the wishlist item by ID
+        
         $wishlistItem = Flight::wishlistItemService()->getById($id);
 
         if (!$wishlistItem) {
@@ -102,10 +101,10 @@ Flight::route('DELETE /wishlistitems/@id', function($id) {
             return;
         }
 
-        // Get the wishlist associated with the user
+        
         $wishlist = Flight::wishlistDao()->getWishlistByUserId($user->id);
         
-        // Ensure the item belongs to the user's wishlist or the user is an admin
+        // item belongs to the user's wishlist or the user is an admin
         if (!$wishlist || $wishlistItem['Wishlist_WishlistID'] != $wishlist['id']) {
             if ($user->UserType !== Roles::ADMIN) {
                 Flight::json(['error' => 'Forbidden: You cannot delete this wishlist item.'], 403);
@@ -156,7 +155,6 @@ Flight::route('DELETE /wishlistitems/@id', function($id) {
 Flight::route('PUT /wishlistitems/@wishlistItemId', function($wishlistItemId) {
         Flight::auth_middleware()->authorizeUserTypes([Roles::ADMIN]);
 
-
     try{ 
     $data = Flight::request()->data->getData();
     Flight::wishlistItemService()->updateWishlistItem($wishlistItemId, $data['new_product_id'], $data['user_id']);
@@ -198,16 +196,14 @@ Flight::route('PUT /wishlistitems/@wishlistItemId', function($wishlistItemId) {
 Flight::route('DELETE /wishlistitems/clear/@userId', function($userId) {
     Flight::auth_middleware()->authorizeUserTypes([Roles::ADMIN, Roles::USER]);
     $user = Flight::get('user');
-// Only allow users to clear their own wishlist unless admin
     if ($user->UserType !== Roles::ADMIN && $user->id != $userId) {
         Flight::json(['error' => 'Forbidden: Not allowed to clear another user\'s wishlist.'], 403);
         return;
     }
-    try{ 
+    try { 
     Flight::wishlistItemService()->clearWishlist($userId);
     Flight::json(["message" => "Wishlist cleared."], 200);
     } catch (Exception $e) {
-        
         if ($e->getMessage() == 'Wishlist not found.') {
             Flight::json(['error' => $e->getMessage()], 404);  
         } else {
@@ -216,7 +212,6 @@ Flight::route('DELETE /wishlistitems/clear/@userId', function($userId) {
         }
     }
 });
-
 
 
 ?>

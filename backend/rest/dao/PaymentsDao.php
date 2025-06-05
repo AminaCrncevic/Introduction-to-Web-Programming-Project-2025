@@ -1,6 +1,4 @@
-
 <?php
-
 require_once 'BaseDao.php';
 class PaymentDao extends BaseDao {
     public function __construct() {
@@ -55,22 +53,20 @@ class PaymentDao extends BaseDao {
 
 
     
-    // Update payment by ID (uses BaseDao's update function)
+    // Update payment by ID 
     public function updatePayment($id, $paymentData) {
-        return $this->update($id, $paymentData);  // Uses BaseDao's update method
+        return $this->update($id, $paymentData);  
     }
 
-    // Get all payments (uses BaseDao's getAll method)
+    // Get all payments 
     public function getAll() {
-      //  return $this->getAll(); 
           return parent::getAll(); 
 
     }
 
-      // Get payment details by Payment ID (uses BaseDao's getById method)
+      // Get payment details by Payment ID 
       public function getById($id)
        {
-      //  return $this->getById($id);  // Calls BaseDao's getById method
       return parent::getById($id);
         }
 
@@ -78,15 +74,12 @@ class PaymentDao extends BaseDao {
 
         
         /*************** *//*DELETE PAYMENT BY ID*/ 
-        public function delete($id) {
+    public function delete($id) {
             $stmt = $this->connection->prepare("DELETE FROM Payments WHERE id = :id");
             $stmt->bindParam(':id', $id);
             $stmt->execute();
         }
     
-
-
-
 
     // Delete a payment for an order
     public function deletePaymentByOrderId($orderId) {
@@ -103,6 +96,14 @@ class PaymentDao extends BaseDao {
         $stmt->bindParam(':paymentId', $paymentId, PDO::PARAM_INT);
         return $stmt->execute();
     }
+
+   
+
+    public function getTotalCompletedPayments() {
+    return $this->queryValue("SELECT SUM(AmountPaid) FROM payments WHERE PaymentStatus = 'completed'", []);
+}
+
+
 }
 
 ?>

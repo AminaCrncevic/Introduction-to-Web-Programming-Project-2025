@@ -62,12 +62,9 @@ class WishlistService extends BaseService {
 
 }
 
-
 /*createWishlistForUser: This method checks if the user already has a wishlist. If not, it creates a new wishlist entry for them.
 getWishlistByUserId: Returns the wishlist for a given user.
 deleteWishlist: Deletes the wishlist by ID. This is an optional method.
 getWishlistById: Retrieves the wishlist by its unique ID.*/
-
-
 
 ?>

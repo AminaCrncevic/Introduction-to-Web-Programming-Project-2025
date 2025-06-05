@@ -1,7 +1,5 @@
 <?php
 
-
-
 require_once 'OrderItemDao.php';
 
 $orderItemDao = new OrderItemDao();

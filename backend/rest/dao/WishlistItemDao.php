@@ -1,4 +1,3 @@
-
 <?php
 
 require_once 'BaseDao.php';
@@ -9,7 +8,7 @@ class WishlistItemDao extends BaseDao {
         parent::__construct("WishlistItem");
     }
 
-    // Add item to wishlist (only inserts, no business logic here)
+    // Add item to wishlist 
     public function addWishlistItem($wishlistId, $productId) {
         $stmt = $this->connection->prepare("INSERT INTO WishlistItem (Wishlist_WishlistID, Products_ProductID) VALUES (:wishlistId, :productId)");
         $stmt->bindParam(':wishlistId', $wishlistId, PDO::PARAM_INT);
@@ -19,7 +18,7 @@ class WishlistItemDao extends BaseDao {
 
     // Get all items in a wishlist
     public function getWishlistItems($wishlistId) {
-        $stmt = $this->connection->prepare("SELECT w.id, p.ProductName, p.ProductPrice 
+        $stmt = $this->connection->prepare("SELECT w.id, p.ProductName, p.ProductPrice, p.ProductImage
                                             FROM WishlistItem w 
                                             JOIN Products p ON w.Products_ProductID = p.id 
                                             WHERE w.Wishlist_WishlistID = :wishlistId");
@@ -59,15 +58,6 @@ class WishlistItemDao extends BaseDao {
         $stmt->execute();
     }
     
-
-
-
-
-
-
-
 }
-
-
 
 ?>

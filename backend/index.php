@@ -87,10 +87,18 @@ require_once __DIR__ .'/rest/routes/AuthRoutes.php';
 
 require_once __DIR__ . '/rest/dao/WishlistDao.php'; 
 
+// Register AdminService and its routes
+require_once __DIR__ . '/rest/services/AdminService.php';
+Flight::register('adminService', "AdminService");
+require_once __DIR__ . '/rest/routes/AdminRoutes.php';
+
+
+
+
 Flight::map('wishlistDao', function() {
     return new WishlistDao();
 });
 
 
-Flight::start();  //start FlightPHP
+Flight::start();  
 ?>

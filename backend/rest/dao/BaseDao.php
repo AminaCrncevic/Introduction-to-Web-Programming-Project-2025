@@ -4,16 +4,7 @@ require_once 'config.php';
 
 class BaseDao {
 
-   /*protected $table;
-   protected $connection;
-
-
-   public function __construct($table) {
-       $this->table = $table;
-       $this->connection = Database::connect();
-   }*/
-
-
+   
 protected $connection;
 private $table;
 
@@ -153,6 +144,14 @@ private $table;
     public function rollBack() {
         $this->connection->rollBack();
     }
+
+
+    /******************************* */
+public function queryValue(string $sql, array $params = []) {
+    $stmt = $this->connection->prepare($sql);
+    $stmt->execute($params);
+    return $stmt->fetchColumn();
+}
 
 }
 ?>

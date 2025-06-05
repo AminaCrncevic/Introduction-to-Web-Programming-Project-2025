@@ -116,13 +116,25 @@ class PaymentService extends BaseService {
 
 
 
+        /************************************************* */
+        public function updatePaymentStatus($orderId, $newStatus) {
+    $payment = $this->getPaymentByOrderId($orderId);
+    if (!$payment) {
+        throw new Exception("Payment not found for this order.");
+    }
+
+    if (!in_array($newStatus, ['pending', 'completed'])) {
+        throw new Exception("Invalid payment status.");
+    }
+
+    $this->paymentDao->updatePaymentStatusByPaymentID($payment['id'], $newStatus);
+}
 
 
         // Delete a payment by payment ID
     public function delete($id) {
     return $this->paymentDao->delete($id);
 }
-
 
     
 }

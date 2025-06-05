@@ -1,8 +1,6 @@
 <?php
 
-//Orders table will serve two purposes:
-//As a cart → When a user adds items to the cart, an order is created with a pending status. 
-//The user can modify this order (add/remove items).
+//The user can modify his order (add/remove items).
 //As a finalized order → When the user proceeds to checkout, enters payment details, and confirms payment,
 // the order is marked as completed.
 
@@ -10,17 +8,17 @@ require_once 'BaseDao.php';
 
 class OrderDao extends BaseDao {
     public function __construct() {
-        parent::__construct("Orders"); // Pass "Orders" table name to BaseDao constructor
+        parent::__construct("Orders"); 
     }
 
     // Get order by ID
     public function getOrderById($id) {
-        return $this->getById($id);  // Use BaseDao's getById method
+        return $this->getById($id);  
     }
 
     // Add a new order
     public function addOrder($order) {
-        return $this->insert($order);  // Use BaseDao's insert method
+        return $this->insert($order);  
     }
     
     public function addOrder1($orderData) {
@@ -35,14 +33,14 @@ class OrderDao extends BaseDao {
     }
     
 
-    // Update order by ID (simple update operation)
+    // Update order by ID 
     public function updateOrder($id, $order) {
-        return $this->update($id, $order);  // Use BaseDao's update method
+        return $this->update($id, $order);  
     }
 
-    // Delete order by ID (simple delete operation)
+    // Delete order by ID 
     public function deleteOrder($id) {
-        return $this->delete($id);  // Use BaseDao's delete method
+        return $this->delete($id);  
     }
 
     // Get orders by user ID
@@ -50,7 +48,7 @@ class OrderDao extends BaseDao {
         $stmt = $this->connection->prepare("SELECT * FROM Orders WHERE Users_UserID = :userId");
         $stmt->bindParam(':userId', $userId);
         $stmt->execute();
-        return $stmt->fetchAll();  // Fetch all orders for a specific user
+        return $stmt->fetchAll();  
     }
 
         // Get a pending order for a user
@@ -60,7 +58,16 @@ class OrderDao extends BaseDao {
             $stmt->execute();
             return $stmt->fetch(PDO::FETCH_ASSOC);  // Return the first row (pending order) for the user
         }
+    
+    
+    public function countAllOrders() {
+    return $this->queryValue("SELECT COUNT(*) FROM orders", []);
 }
 
+    public function countOrdersByStatus($status) {
+    return $this->queryValue("SELECT COUNT(*) FROM orders WHERE OrderStatus = ?", [$status]);
+}
+
+}
 
 ?>

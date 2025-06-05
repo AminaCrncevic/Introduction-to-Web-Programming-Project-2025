@@ -1,8 +1,8 @@
 
 <?php
 require_once 'vendor/autoload.php';
-require_once 'data/Roles.php';  // Include the Roles class
-require_once 'middleware/AuthMiddleware.php';  // Include the AuthMiddleware
+require_once 'data/roles.php';  
+require_once 'middleware/AuthMiddleware.php';  
 
 
 
@@ -102,10 +102,6 @@ Flight::route('DELETE /wishlist/@id', function ($id) {
     Flight::wishlistService()->deleteWishlist($id);
     Flight::json(["message" => "Wishlist deleted successfully."]);
 });
-
-
-
-
 
 
 ?>

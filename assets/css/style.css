@@ -378,33 +378,6 @@ margin-top: 10px;
 }
 
 
-/*product search css*/
-.search-container {
-    text-align: center;
-    margin-top: 90px;
-}
-
-.search-container input[type=text] {
-    padding: 10px;
-    width: 300px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    box-sizing: border-box;
-}
-
-.search-container button {
-    padding: 10px 20px;
-    background-color: palevioletred;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
-
-.search-container button:hover {
-    background-color: pink;
-}
 .products h1{
     margin-top: 30px;
 }
@@ -503,9 +476,9 @@ margin-top: 10px;
 }
 
 /**********************************ACCOUNT PAGE CSS ************************************/
-/* General Page Layout */
+
 body {
-    /*font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;*/
+    
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     background: #fff0f6;
     margin: 0;
@@ -514,7 +487,6 @@ body {
 
 .account-page {
     max-width: 600px;
-    /*margin: 40px auto;*/
     margin: 100px auto 80px auto; /* Added top margin */
     padding: 30px;
     background-color: #ffffff;
@@ -641,65 +613,222 @@ body {
 
 
 
+/****************************************ADMIN MANAGE ORDER CSS***************************/
+#manual-update-form {
+  max-width: 400px;
+  margin: 80px auto 30px auto; 
+  padding: 20px;
+  background-color: #ffe6f0; 
+  border: 2px solid #ff99cc;
+  border-radius: 15px;
+  box-shadow: 0 5px 15px rgba(255, 153, 204, 0.3);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+#manual-update-form label {
+  display: block;
+  margin-bottom: 8px;
+  color: #cc0066;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+#manual-update-form input[type="number"],
+#manual-update-form select {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ffb3d9;
+  border-radius: 8px;
+  background-color: #fff0f5;
+  font-size: 14px;
+  color: #333;
+}
+
+#manual-update-form button {
+  background-color: #ff66b2;
+  color: white;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+#manual-update-form button:hover {
+  background-color: #e60073;
+}
 
 
+/*****************************ADMIN MANAGE USERS CSS************************************/
+#manage-users-form {
+  max-width: 420px;
+  margin: 80px auto 30px auto;
+  padding: 25px 30px;
+  background-color: #ffe6f0; 
+  border: 2px solid #ff99cc;
+  border-radius: 15px;
+  box-shadow: 0 5px 15px rgba(255, 153, 204, 0.3);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+#manage-users-form label {
+  display: block;
+  margin-bottom: 8px;
+  color: #cc0066;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+#manage-users-form input[type="number"],
+#manage-users-form input[type="text"],
+#manage-users-form select {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ffb3d9;
+  border-radius: 8px;
+  background-color: #fff0f5;
+  font-size: 14px;
+  color: #333;
+}
+
+#manage-users-form button {
+  background-color: #ff66b2;
+  color: white;
+  padding: 12px 18px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+#manage-users-form button:hover {
+  background-color: #e60073;
+}
+
+/***************************ADMIN MANAGE PRODUCTS CSS************************/
+#manage-product-form {
+  max-width: 420px;
+  margin: 80px auto 30px auto;
+  padding: 25px 30px;
+  background-color: #ffe6f0;
+  border: 2px solid #ff99cc;
+  border-radius: 15px;
+  box-shadow: 0 5px 15px rgba(255, 153, 204, 0.3);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+#manage-product-form label {
+  display: block;
+  margin-bottom: 8px;
+  color: #cc0066;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+#manage-product-form input[type="number"],
+#manage-product-form input[type="text"] {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ffb3d9;
+  border-radius: 8px;
+  background-color: #fff0f5;
+  font-size: 14px;
+  color: #333;
+}
+
+#manage-product-form button {
+  background-color: #ff66b2;
+  color: white;
+  padding: 12px 18px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+#manage-product-form button:hover {
+  background-color: #e60073;
+}
 
 
+/**********************************************************wishlist page css************************/
+/*Wishlist page CSS ( 3-per-row layout)*/
+
+.wishlist-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin: 80px auto 0;
+  padding: 0 16px;
+  max-width: 1200px; 
+}
+
+@media (max-width: 768px) {
+  .wishlist-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .wishlist-grid {
+    grid-template-columns: 1fr;
+  }
+}
 
 
+.wishlist-item {
 
+  border: 1px solid #ccc;
+  border-radius: 8px;
+   min-height: 220px; 
+  padding: 16px 16px; 
+  padding: 8px;
+  text-align: center;
+  background-color: #fff;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+  transition: transform 0.2s;
+}
 
+.wishlist-item:hover {
+  transform: scale(1.02);
+}
 
+.wishlist-item img {
+  max-width: 90%;
+  max-height: 140px;
+  border-radius: 6px;
+  object-fit: cover;
+  margin-bottom: 8px;
+}
 
+.wishlist-item h3 {
+  font-size: 1.2rem;
+  margin: 6px 0;
+}
 
+.wishlist-item p {
+  font-size: 1.10rem;
+  color: #555;
+}
 
+.remove-btn {
+  display: inline-block;
+  margin-top: 10px;
 
-
-
-
-
-
-
-
-/************************************************************************************************/
-/*************************ADMIN DASHBOARD CSS ***********************************/
-  /*
-    .dashboard {
-        width: 100%;
-
-        margin-top: 50px;
-    }
- 
-
-
-  
-    
-    .box-container {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 20px;
-    }
-    .box {
-        background-color: white;
-        padding: 30px;
-        width: 180px;
-        text-align: center;
-        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-        border-radius: 10px;
-    }
-    .box h3 {
-        font-size: 30px;
-        margin: 0;
-    }
-    .box p {
-        font-size: 16px;
-        color: #777;
-    }*/
-
-
-
-
-
+  color: white;
+  border: none;
+  padding: 6px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  width: auto;
+}
 
 
 
@@ -761,7 +890,7 @@ body {
 
 @media screen and (max-width: 790px) {
     .dropdown-content {
-        overflow-y: auto; /* Enable vertical scrolling */
+        overflow-y: auto; /* vertical scrolling */
         max-height: 200px;
     }
 }
@@ -769,7 +898,7 @@ body {
 @media screen and (max-width: 790px) {
     .navbar {
         overflow-x: scroll;
-      /* Enable horizontal scrolling */
+      /*  horizontal scrolling */
         
     }
 }

@@ -84,8 +84,6 @@ Flight::group('/auth', function() {
     */
    Flight::route('POST /login', function() {
        $data = Flight::request()->data->getData();
-  //var_dump($data); // <---- to debug
-  //  die(); // Stop execution
 
        $response = Flight::auth_service()->login($data);
   

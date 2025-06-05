@@ -3,7 +3,6 @@ require_once 'BaseDao.php';
 
 class ProductDao extends BaseDao {
     public function __construct() {
-        // Pass the 'Products' table to the parent constructor
         parent::__construct("Products");
     }
 
@@ -31,5 +30,10 @@ class ProductDao extends BaseDao {
     public function deleteProduct($id) {
         return $this->delete($id);  // Uses BaseDao's delete method
     }
+ 
+    public function countAll() {
+    return $this->queryValue("SELECT COUNT(*) FROM products", []);
+}
+
 }
 ?>
