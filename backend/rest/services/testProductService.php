@@ -1,6 +1,5 @@
 <?php
-//require_once __DIR__ . '/../dao/ProductDao.php';
-//require_once __DIR__ . '/../services/ProductService.php';
+
 require_once 'ProductService.php';
 
 

@@ -14,7 +14,7 @@ class ProductService extends BaseService {
     }
 
 
-    // Create a new product with validation
+    
     public function createProduct($data) {
         
         if (empty($data['ProductName'])) {
@@ -38,38 +38,22 @@ class ProductService extends BaseService {
 
 
 
-    
-
     // Update an existing product
     public function updateProduct($id, $data) {
-       // if (empty($data['ProductName'])) {
-       //    throw new Exception("Product name is required");
-      //  }
-
-        
         if (!isset($data['ProductPrice']) || !is_numeric($data['ProductPrice']) || $data['ProductPrice'] <= 0) {
             throw new Exception("Product price must be a positive number");
         }
 
-        
         if (empty($data['ProductImage'])) {
             $data['ProductImage'] = 'default.jpg'; 
         }
-
         
 $result = $this->dao->updateProduct($id, $data);
 
-
 $orderService = new OrderService();
 $orderService->updateOrdersAfterProductPriceChange($id);
-
-
-       // return $this->dao->updateProduct($id, $data);
        return $result;
     }
-
-
-
 
 
 
@@ -85,16 +69,10 @@ $orderService->updateOrdersAfterProductPriceChange($id);
 
 
 
-
-
     // Get all products
     public function getAllProducts() {
         return $this->dao->getAllProducts();
     }
-
-
-
-
 
 
     // Delete product

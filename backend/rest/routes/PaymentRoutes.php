@@ -1,8 +1,8 @@
 
 <?php
 require_once 'vendor/autoload.php';
-require_once 'data/Roles.php';  // Include the Roles class
-require_once 'middleware/AuthMiddleware.php';  // Include the AuthMiddleware
+require_once 'data/roles.php';  
+require_once 'middleware/AuthMiddleware.php';  
 
 
 
@@ -30,7 +30,6 @@ Flight::route('GET /payments/pending/@userId', function($userId) {
     Flight::auth_middleware()->authorizeUserTypes([Roles::ADMIN, Roles::USER]);
     $user = Flight::get('user');
   try {
-     // Enforce access control: Only owner or admin
         if ($user->UserType !== Roles::ADMIN && (int)$user->id !== (int)$userId) {
             Flight::halt(403, "Forbidden: You can only access your own payment data.");
         } 
@@ -39,14 +38,6 @@ Flight::route('GET /payments/pending/@userId', function($userId) {
     Flight::json(["error" => $e->getMessage()], 404);
 }
 });
-
-
-
-
-
-
-
-
 
 
 
@@ -78,8 +69,6 @@ Flight::route('POST /payments/create', function() {
     $user = Flight::get('user');
         $data = Flight::request()->data->getData();
     try {
-       // $data = Flight::request()->data->getData();
-         // Ownership check: only allow creating payment for yourself or if admin
         if ($user->UserType !== Roles::ADMIN && (int)$user->id !== (int)$data['user_id']) {
             Flight::halt(403, "Forbidden: You can only create a payment for your own account.");
         }
@@ -124,14 +113,12 @@ Flight::route('PUT /payments/mark-completed/@orderId', function($orderId) {
     Flight::auth_middleware()->authorizeUserTypes([Roles::ADMIN, Roles::USER]);
     $user = Flight::get('user');
    try {
-        // Get the order to check ownership
         $order = Flight::orderService()->getOrderById($orderId);
 
         if (!$order) {
             Flight::halt(400, "Order not found.");
         }
 
-        // Ownership check: Only the owner or admin can mark it as completed
         if ($user->UserType !== Roles::ADMIN && (int)$user->id !== (int)$order['Users_UserID']) {
             Flight::halt(403, "Forbidden: You can only mark your own payment as completed.");
         }
@@ -175,13 +162,13 @@ Flight::route('GET /payments/by-order/@orderId', function($orderId) {
     Flight::auth_middleware()->authorizeUserTypes([Roles::ADMIN, Roles::USER]);
     $user = Flight::get('user');
  try {
-        // Verify the order exists and retrieve user ownership
+       
         $order = Flight::orderService()->getOrderById($orderId);
         if (!$order) {
             Flight::halt(404, "Order not found.");
         }
 
-        // Ownership check
+   
         if ($user->UserType !== Roles::ADMIN && (int)$user->id !== (int)$order['Users_UserID']) {
             Flight::halt(403, "Forbidden: You can only access your own payment details.");
         }
@@ -196,7 +183,6 @@ Flight::route('GET /payments/by-order/@orderId', function($orderId) {
         Flight::halt(500, "Internal Server Error: " . $e->getMessage());
     }
 
-//    Flight::json(Flight::paymentService()->getPaymentByOrderId($orderId));
 });
 
 
@@ -232,7 +218,7 @@ Flight::route('PUT /payments/update-status/@orderId', function($orderId) {
     $user = Flight::get('user');
     try {
         $order = Flight::orderService()->getOrderById($orderId);
-         // Ownership check
+        
         if ($user->UserType !== Roles::ADMIN && (int)$user->id !== (int)$order['Users_UserID']) {
             Flight::halt(403, "Forbidden: You can only update your own payment.");
         }
@@ -279,7 +265,7 @@ Flight::route('POST /payments/create-for-user/@userId', function($userId) {
     Flight::auth_middleware()->authorizeUserTypes([Roles::ADMIN, Roles::USER]);
     $user = Flight::get('user');
     try {
-         // Ownership check
+         
         if ($user->UserType !== Roles::ADMIN && (int)$user->id !== (int)$userId) {
             Flight::halt(403, "Forbidden: You can only create a payment for your own account.");
         }
@@ -343,8 +329,7 @@ try {
     } catch (Exception $e) {
         Flight::halt(500, "Internal Server Error: " . $e->getMessage());
     }
-   // Flight::paymentService()->delete($id);
-    //Flight::json(["message" => "Payment deleted successfully."]);
+ 
   
 });
 

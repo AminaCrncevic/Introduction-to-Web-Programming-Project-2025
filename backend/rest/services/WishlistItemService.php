@@ -83,11 +83,4 @@ class WishlistItemService extends BaseService {
       
       $this->dao->clearWishlistItems($wishlist['id']);
     }
-
-   //  public function getItemById($id) {
-        // Implement the logic to fetch the wishlist item by ID
-        // You can use the DAO layer to fetch the item from the database
-     //   return $this->dao->getById($id);
-    //}
-
 }

@@ -1,8 +1,7 @@
-
 <?php
 require_once 'vendor/autoload.php';
-require_once 'data/Roles.php';  // Include the Roles class
-require_once 'middleware/AuthMiddleware.php';  // Include the AuthMiddleware
+require_once 'data/roles.php';  
+require_once 'middleware/AuthMiddleware.php';  
 
 /**
  * @OA\Get(
@@ -68,9 +67,6 @@ Flight::route('GET /product', function(){
 
 
 
-
-
-
 /**
  * @OA\Post(
  *     path="/product",
@@ -104,6 +100,11 @@ Flight::route('GET /product', function(){
 Flight::route('POST /product', function(){
     Flight::auth_middleware()->authorizeUserTypes([Roles::ADMIN]);
     $data = Flight::request()->data->getData();
+      // Validate image URL exists
+    if (empty($data['ProductImage']) || !filter_var($data['ProductImage'], FILTER_VALIDATE_URL)) {
+        Flight::json(['error' => 'Valid ProductImage URL is required'], 400);
+        return;
+    }
     try {
         $product = Flight::productService()->createProduct($data);
         Flight::json($product, 201); 
@@ -111,10 +112,6 @@ Flight::route('POST /product', function(){
         Flight::json(['error' => $e->getMessage()], 400);
     }
 });
-
-
-
-
 
 
 
@@ -253,8 +250,6 @@ Flight::route('DELETE /product/@id', function($id){
      Flight::auth_middleware()->authorizeUserTypes([Roles::ADMIN]);
     Flight::json(Flight::productService()->deleteProduct($id));
 });
-
-
 
 
 ?>

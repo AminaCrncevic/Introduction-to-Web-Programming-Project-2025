@@ -1,6 +1,5 @@
 <?php
 
-
 require_once 'BaseService.php';
 require_once __DIR__ . '/../dao/OrdersDao.php';
 require_once __DIR__ . '/../dao/OrderItemDao.php';
@@ -163,15 +162,12 @@ class OrderService extends BaseService {
         $items = $this->orderItemDao->getOrderItemsByOrderId($orderId);
         $total = 0;
         foreach ($items as $item) {
-          //  $product = $this->productDao->getById($item['Products_ProductID']);
-          //  $total += $product['ProductPrice'] * $item['Quantity'];
+         
           $total += $item['Price'] * $item['Quantity']; 
         }
 
         $this->orderDao->updateOrder($orderId, ['TotalAmount' => $total]);
     }
-
-
 
 
     /**************************************** */
@@ -199,8 +195,6 @@ return $order;
 
 }
 /********************************* */
-
-
 
 
 public function updateOrdersAfterProductPriceChange($productId) {

@@ -1,6 +1,6 @@
 
 <?php
-//require_once 'BaseDao.php';
+
 require_once __DIR__ . '/../dao/BaseDao.php';
 class BaseService {
    protected $dao;
@@ -35,6 +35,4 @@ class BaseService {
         return $this->dao->update($entity, $id, $id_column);
     }
 
-
-    /************************************************ */
 }

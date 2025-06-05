@@ -1,8 +1,8 @@
 
 <?php
 require_once 'vendor/autoload.php';
-require_once 'data/Roles.php';  // Include the Roles class
-require_once 'middleware/AuthMiddleware.php';  // Include the AuthMiddleware
+require_once 'data/roles.php';  
+require_once 'middleware/AuthMiddleware.php';  
 
 
 
@@ -158,9 +158,6 @@ Flight::route('PUT /orderitems/update', function() {
 
 
 
-
-
-
 /**
  * @OA\Delete(
  *      path="/orderitems/remove/{orderItemId}",
@@ -198,7 +195,7 @@ try{
         if (!$orderItem) {
             Flight::halt(404, "Order item not found.");
         }
-        // Check if the user is the owner or an admin
+        //if the user is the owner or an admin
         if ($user->UserType !== Roles::ADMIN && $user->id !== $orderItem['Users_UserID']) {
             Flight::halt(403, "Forbidden: You can only delete your own cart items.");
         }    
@@ -208,8 +205,5 @@ try{
         Flight::halt(500, "Internal Server Error: " . $e->getMessage());
     }
 });
-
-
-
 
 ?>

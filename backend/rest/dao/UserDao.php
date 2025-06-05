@@ -56,7 +56,15 @@ class UserDao extends BaseDao {
         return $this->connection->lastInsertId();
     }
     
+    /******************************************** */
+    
+    public function countAll() {
+    return $this->queryValue("SELECT COUNT(*) FROM users", []);
+}
 
+public function countUsersByType($type) {
+    return $this->queryValue("SELECT COUNT(*) FROM users WHERE UserType = ?", [$type]);
+}
 
 }
 ?>

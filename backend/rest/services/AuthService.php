@@ -41,17 +41,17 @@ class AuthService extends BaseService {
            return ['success' => false, 'error' => 'Email already registered.'];
        }
 /************************************************************** */
-       // Validate email format - added from my UserService
+      
         if (!filter_var($entity['email'], FILTER_VALIDATE_EMAIL)) {
             throw new Exception("Invalid email format.");
         }
         /************* */
-        // Validate email TLD - added from my UserService
+        
         if (!$this->validateEmailTLD($entity['email'])) {
             throw new Exception("Invalid email TLD.");
         }
         /********************** */
-        // Validate MX records
+       
         $domain = substr(strrchr($entity['email'], "@"), 1);
         if (!$this->validateMXRecords($domain)) {
             throw new Exception("No MX records found for the domain: $domain.");
@@ -61,39 +61,27 @@ class AuthService extends BaseService {
             $entity['userType'] = 'user';
         }
        $entity['password'] = password_hash($entity['password'], PASSWORD_BCRYPT);
-      // $entity = parent::add($entity);
-      // Create user
-        $created_user = parent::add($entity);  // returns user row with ID
+   
+        $created_user = parent::add($entity);  
         if (!$created_user || empty($created_user['id'])) {
             throw new Exception("Failed to create user.");
         }
 
         $userId = $created_user['id'];
-        // Create wishlist for user
+       
         $this->wishlistService->createWishlistForUser($userId);
 
-        // Create pending order
+      
         $pendingOrder = $this->orderService->getOrCreatePendingOrder($userId);
         if (!$pendingOrder || empty($pendingOrder['id'])) {
             throw new Exception("Failed to create pending order for the user.");
         }
-         // Create pending payment for that order
+     
         $this->paymentService->createPendingPaymentForOrder($pendingOrder['id'], $userId);
-
-
-
 
        unset($created_user['password']);
        return ['success' => true, 'data' => $entity];             
    }
-
-
-
-
-
-
-
-
 
 
 
@@ -105,8 +93,7 @@ class AuthService extends BaseService {
            return ['success' => false, 'error' => 'Email and password are required.'];
        }
        $user = $this->auth_dao->get_user_by_email($entity['email']);
-//       var_dump($user);
-//exit();
+
 
        if(!$user){
            return ['success' => false, 'error' => 'Invalid email or password.'];

@@ -1,7 +1,7 @@
 
 <?php
 require_once 'vendor/autoload.php';
-require_once 'data/Roles.php';  
+require_once 'data/roles.php';  
 require_once 'middleware/AuthMiddleware.php';  
 
 /**
@@ -21,9 +21,7 @@ require_once 'middleware/AuthMiddleware.php';
  */
 // Get all orders for a specific user - WORKS!
 Flight::route('GET /orders/@userId', function($userId) {
-    //Flight::json(Flight::orderService()->getOrdersByUserId($userId));
-    // Ensure the user is authorized for this route, only allow access if the user is an admin or the same user
-    //Flight::auth_middleware()->authorizeUserTypes([Roles::ADMIN]);
+ 
       $user = Flight::get('user');
     if ($user->UserType !== Roles::ADMIN && $user->id != $userId) {
         Flight::halt(403, 'Access denied: not your orders');
@@ -32,7 +30,7 @@ Flight::route('GET /orders/@userId', function($userId) {
         $orders = Flight::orderService()->getOrdersByUserId($userId);
         Flight::json($orders);
     } catch (Exception $e) {
-        Flight::json(['error' => $e->getMessage()], 404);  // Internal server error
+        Flight::json(['error' => $e->getMessage()], 404);  
     }
 });
 
@@ -56,13 +54,12 @@ Flight::route('GET /orders/@userId', function($userId) {
  */
 // Get a single order by order ID - WORKS!
 Flight::route('GET /orders/single/@orderId', function($orderId) {
-    //Flight::json(Flight::orderService()->getOrderById($orderId));
     Flight::auth_middleware()->authorizeUserTypes([Roles::ADMIN]);
     try {
         $order = Flight::orderService()->getOrderById($orderId);
         Flight::json($order);
     } catch (Exception $e) {
-        Flight::json(['error' => $e->getMessage()], 404);  // Order not found
+        Flight::json(['error' => $e->getMessage()], 404);  
     }
 });
 
@@ -95,12 +92,13 @@ Flight::route('GET /orders/single/@orderId', function($orderId) {
 // Add item to a user's pending order - WORKS!
 Flight::route('POST /orders/add-item', function() {
 
-    //$token = Flight::request()->getHeader('Authorization');
-    //Flight::auth_middleware()->verifyToken($token);
     Flight::auth_middleware()->authorizeUserTypes([Roles::USER, Roles::ADMIN]); 
 
     $data = Flight::request()->data->getData();
-    if (Flight::get('user')->id != $data['user_id']) {
+    $currentUser = Flight::get('user');
+
+    // If current user is NOT admin, they can only add to their own order
+    if ($currentUser->UserType !== Roles::ADMIN && $currentUser->id != $data['user_id']) {
         Flight::halt(403, 'Access denied: not your account');
     }
 
@@ -108,7 +106,7 @@ Flight::route('POST /orders/add-item', function() {
     Flight::orderService()->addItemToOrder($data['user_id'], $data['product_id'], $data['quantity']);
     Flight::json(["message" => "Item added to order."]);
 } catch (Exception $e) {
-    Flight::json(['error' => $e->getMessage()], 400);  // Bad Request
+    Flight::json(['error' => $e->getMessage()], 400);  
 }
 });
 
@@ -132,10 +130,9 @@ Flight::route('POST /orders/add-item', function() {
  */
 // Remove an item from a user's order
 Flight::route('DELETE /orders/remove-item/@orderItemId/@userId', function($orderItemId, $userId) {
-    //Flight::orderService()->removeItemFromOrder($orderItemId, $userId);
-    //Flight::json(["message" => "Item removed from order."]);
-    Flight::auth_middleware()->authorizeUserTypes([Roles::USER, Roles::ADMIN]);  // Ensure the user is allowed to remove items
-    if (Flight::get('user')->id != $userId) {
+ 
+    Flight::auth_middleware()->authorizeUserTypes([Roles::USER, Roles::ADMIN]);  
+    if (Flight::get('user')->UserType !== Roles::ADMIN && Flight::get('user')->id != $userId) {
         Flight::halt(403, 'Access denied: not your order');
     }
     try {
@@ -178,7 +175,7 @@ Flight::route('PUT /orders/update-item', function() {
 
     $data = Flight::request()->data->getData();
     
-    if (Flight::get('user')->id != $data['user_id']) {
+    if (Flight::get('user')->UserType !== Roles::ADMIN && Flight::get('user')->id != $data['user_id']) {
         Flight::halt(403, 'Access denied: not your order');
     }
 
@@ -219,10 +216,9 @@ Flight::route('PUT /orders/update-item', function() {
 
 // Get all items in the user's pending order - WORKS!
 Flight::route('GET /orders/pending-items/@userId', function($userId) {
-   // Flight::json(Flight::orderService()->getPendingOrderItems($userId));
-
+   
     Flight::auth_middleware()->authorizeUserTypes([Roles::USER, Roles::ADMIN]);
-    if (Flight::get('user')->id != $userId) {
+    if (Flight::get('user')->id != $userId && Flight::get('user')->UserType !== Roles::ADMIN) {
         Flight::halt(403, 'Access denied: not your pending order');
     }
 
@@ -230,7 +226,7 @@ Flight::route('GET /orders/pending-items/@userId', function($userId) {
     $items = Flight::orderService()->getPendingOrderItems($userId);
     Flight::json($items);
 } catch (Exception $e) {
-    Flight::json(['error' => $e->getMessage()], 500);  // Internal server error
+    Flight::json(['error' => $e->getMessage()], 500);  
 }
 });
 
@@ -264,7 +260,7 @@ Flight::route('PUT /orders/complete/@orderId/@userId', function($orderId, $userI
         Flight::orderService()->completeOrder($orderId, $userId);
         Flight::json(["message" => "Order completed successfully."]);
     } catch (Exception $e) {
-        Flight::json(['error' => $e->getMessage()], 400);  // Bad Request
+        Flight::json(['error' => $e->getMessage()], 400);  
     }
 });
 
@@ -300,7 +296,7 @@ Flight::route('PUT /orders/complete/@orderId/@userId', function($orderId, $userI
 // Ensure a pending order exists or create one for a user -WORKS!
 Flight::route('GET /orders/pending-or-create/@userId', function($userId) {
   Flight::auth_middleware()->authorizeUserTypes([Roles::USER, Roles::ADMIN]);
-  if (Flight::get('user')->id != $userId) {
+  if (Flight::get('user')->UserType !== Roles::ADMIN && Flight::get('user')->id != $userId) {
         Flight::halt(403, 'Access denied: not your account');
     }
 
@@ -308,11 +304,8 @@ Flight::route('GET /orders/pending-or-create/@userId', function($userId) {
     $order = Flight::orderService()->getOrCreatePendingOrder($userId);
     Flight::json($order);
 } catch (Exception $e) {
-    Flight::json(['error' => $e->getMessage()], 500);  // Internal server error
+    Flight::json(['error' => $e->getMessage()], 500);  
 }
 });
-
-
-
 
 ?>

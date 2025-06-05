@@ -1,7 +1,4 @@
 <?php
-
-
-
 require_once 'BaseDao.php';
 
 class OrderItemDao extends BaseDao {
@@ -9,16 +6,14 @@ class OrderItemDao extends BaseDao {
         parent::__construct("OrderItem");
     }
 
-
 // Get all order items (uses BaseDao's getAll method)
 public function getAllOrderItems() {
-    return $this->getAll();  // Inherits the getAll() from BaseDao
+    return $this->getAll();  
 }
-
 
 // Get an order item by ID (uses BaseDao's getById method)
 public function getOrderItemById($id) {
-    return $this->getById($id);  // Inherits the getById() from BaseDao
+    return $this->getById($id);  
 }
 public function getOrderItemById1($id) {
     $stmt = $this->connection->prepare("SELECT oi.*, o.Users_UserID 
@@ -28,16 +23,14 @@ public function getOrderItemById1($id) {
     $stmt->execute([$id]);
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    // Add logging or debugging output
     if ($result) {
-        error_log("Order Item Found: " . print_r($result, true));  // Log result
+        error_log("Order Item Found: " . print_r($result, true));  
     } else {
-        error_log("No Order Item Found for ID: " . $id);  // Log when not found
+        error_log("No Order Item Found for ID: " . $id);  
     }
 
     return $result;
 }
-
 
 // Get order items by OrderID - for specific order
 public function getOrderItemsByOrderId($orderId) {
@@ -48,7 +41,7 @@ return $stmt->fetchAll();
 }
 
 
-// Insert a new order item (No logic, just insert)
+// Insert a new order item 
 public function insertOrderItem($orderItemData) {
      $stmt = $this->connection->prepare("
      INSERT INTO OrderItem (Orders_OrderID, Products_ProductID, Quantity, Price) 
@@ -63,11 +56,11 @@ public function insertOrderItem($orderItemData) {
 
 // Update order item by ID
 public function updateOrderItem($id, $orderItem) {
-    return $this->update($id, $orderItem);  // BaseDao's update method
+    return $this->update($id, $orderItem);  
 }
 
 
-// Delete an order item (No checks or logic, just delete)
+// Delete an order item 
 public function deleteOrderItem($orderItemId) {
         $stmt = $this->connection->prepare("
             DELETE FROM OrderItem WHERE id = :orderItemId
@@ -104,12 +97,6 @@ public function updateQuantity($orderItemId, $newQuantity) {
 }
 
 
-
-
-
-
-
-
 /*************************************** */
 // Get all order items for a specific product
 public function getOrderItemsByProductId($productId) {
@@ -123,8 +110,6 @@ public function updateOrderItemPrice($orderItemId, $newPrice) {
     $stmt = $this->connection->prepare("UPDATE OrderItem SET Price = ? WHERE id = ?");
     $stmt->execute([$newPrice, $orderItemId]);
 }
-
-/**************************************** */
 
 }
 

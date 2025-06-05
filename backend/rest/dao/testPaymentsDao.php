@@ -1,6 +1,5 @@
 <?php
 
-
 require_once 'PaymentsDao.php';
 
 class TestPaymentsDao {
@@ -13,7 +12,7 @@ class TestPaymentsDao {
     // Test creating a payment - WORKS!
     public function testCreatePayment() {
         echo "Testing Create Payment...\n";
-        $result = $this->paymentDao->createPayment(5, 101.50); // Order ID 5, Amount 101.50 - IT CREATED PAYMENT - WORKS.
+        $result = $this->paymentDao->createPayment(5, 101.50); 
         if ($result) {
             echo "Payment created successfully.\n";
         } else {

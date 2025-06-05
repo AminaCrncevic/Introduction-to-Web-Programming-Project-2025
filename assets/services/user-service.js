@@ -21,15 +21,56 @@ var UserService = {
             },
         });
 
+     
         $("#registration-form").validate({
-            submitHandler: function (form) {
-                const entity = Object.fromEntries(new FormData(form).entries());
-                UserService.register(entity);
-            },
-        });
+    rules: {
+      
+       firstName: {
+        required:true,
+        minlength:2
+       },
+       lastName:{
+        required:true,
+        minlength:2
+       },
+      
+        email: {
+            required: true,
+            email: true
+        },
+        password: {
+            required: true,
+            minlength: 8
+        }
+    },
+    messages: {
+        firstName: {
+            required: "Please enter your first name",
+            minlength: "First name must be at least 2 characters long!"
+        },
+        lastName: {
+            required: "Please enter your last name",
+            minlength: "Last name must be at least 2 characters long!"
+        },
+        email: {
+            required: "Please enter your email",
+            email: "Please enter a valid email"
+        },
+        password: {
+            required: "Please provide a password",
+            minlength: "Password must be at least 8 characters"
+        }
+    },
+    submitHandler: function (form) {
+        const entity = Object.fromEntries(new FormData(form).entries());
+        UserService.register(entity);
+    }
+});
+
     },
 
     login: function (entity) {
+         $.blockUI({ message: '<h4>Logging in...</h4>' }); 
         $.ajax({
             url: Constants.PROJECT_BASE_URL + "auth/login",
             type: "POST",
@@ -37,6 +78,7 @@ var UserService = {
             contentType: "application/json",
             dataType: "json",
             success: function (result) {
+                $.unblockUI();
                 localStorage.setItem("user_token", result.data.token);
                 UserService.generateMenuItems(); // Inject nav and sections
            Swal.fire({
@@ -50,6 +92,7 @@ var UserService = {
                 
             },
             error: function (xhr) {
+                 $.unblockUI();
                 const message = xhr.responseJSON?.message || "Login failed.";
                 toastr.error(message);
             },
@@ -57,6 +100,7 @@ var UserService = {
     },
 
     register: function (entity) {
+        $.blockUI({ message: '<h4>Registering...</h4>' });
         $.ajax({
             url: Constants.PROJECT_BASE_URL + "auth/register",
             type: "POST",
@@ -64,6 +108,7 @@ var UserService = {
             contentType: "application/json",
             dataType: "json",
             success: function () {
+                 $.unblockUI();
             Swal.fire({
                 icon: 'success',
                 title: 'Registration Complete!',
@@ -76,6 +121,7 @@ var UserService = {
                 }, 100);
             },
             error: function (xhr) {
+                 $.unblockUI();
                 const message = xhr.responseJSON?.message || "Registration failed.";
                 toastr.error(message);
             }
@@ -143,14 +189,9 @@ var UserService = {
     });
 
 
+    let nav = "", main = "";
 
-/****************************************************************** */
-
-
-
-        let nav = "", main = "";
-
-          // Show/hide the shopping cart icon
+        
     if (user.UserType === Constants.USER_ROLE) {
         $("#shopping-cart-icon").show();
     } else {
@@ -176,6 +217,7 @@ var UserService = {
                 <section id="shoppingcart" data-load="shoppingcart.html"></section>
                 <section id="checkoutpage" data-load="checkoutpage.html"></section>
                 <section id="account" data-load="account.html"></section>
+                <section id="productDetailPage" data-load="productDetailPage.html"></section>
             `;
         } else if (user.UserType === Constants.ADMIN_ROLE) {
             nav = `
@@ -183,6 +225,7 @@ var UserService = {
                 <li><a href="#adminOrders">Manage Orders</a></li>
                 <li><a href="#adminUsers">Manage Users</a></li>
                 <li><a href="#adminAddFlower">Add Flowers</a></li>
+                <li><a href="#adminProducts">Update Flowers</a></li>
                 
             `;
             main = `
@@ -191,6 +234,7 @@ var UserService = {
                 <section id="adminUsers" data-load="adminUsers.html"></section>
                 <section id="adminAddFlower" data-load="adminAddFlower.html"></section>
                 <section id="adminPage" data-load="adminPage.html"></section>
+                <section id="adminProducts" data-load="adminProducts.html"></section>
             `;
         }
 

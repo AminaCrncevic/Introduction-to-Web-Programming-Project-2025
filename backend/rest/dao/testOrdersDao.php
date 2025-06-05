@@ -10,7 +10,7 @@ $orderDao = new OrderDao();
 
 // Test: Create a new order (Insert) - WORKS!
 $newOrder = [
-    'Users_UserID' => 7,           // Assuming user with ID 6 exists - WORKS!
+    'Users_UserID' => 7,          
     'OrderStatus' => 'pending',
     'TotalAmount' => 1034.00
 ];
@@ -19,7 +19,7 @@ echo "Order created successfully.\n";
 
 
 // Test: Get the order by ID (Read) - WORKS!
-$order = $orderDao->getOrderById(7); // I FETCHED ORDER WITH Order ID  7 - WORKS!
+$order = $orderDao->getOrderById(7); 
 if ($order) {
     echo "Order fetched by ID successfully: ";
     print_r($order);
@@ -38,7 +38,7 @@ echo "Order updated successfully.\n";
 
 
 // Test: Delete an order - WORKS!
-$orderDao->deleteOrder(6);  //  the order ID is 6  - WORKS! - ORDER DELETED
+$orderDao->deleteOrder(6);  
 echo "Order deleted successfully.\n"; 
 
 
@@ -50,9 +50,5 @@ if ($orders) {
 } else {
     echo "No orders found for user with ID 2.\n";
 }
-
-
-
-
 
 ?>

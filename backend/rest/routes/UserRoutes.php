@@ -1,8 +1,10 @@
 
 <?php
 require_once 'vendor/autoload.php';
-require_once 'data/Roles.php';  // Include the Roles class
-require_once 'middleware/AuthMiddleware.php';  // Include the AuthMiddleware
+require_once 'data/roles.php';  
+require_once 'middleware/AuthMiddleware.php';  
+
+
 /**
  * @OA\Get(
  *     path="/users",
@@ -23,12 +25,6 @@ Flight::route('GET /users', function(){
     Flight::auth_middleware()->authorizeUserTypes([Roles::ADMIN]);
      Flight::json(Flight::userService()->getAllUsers());
 });
-
-
-
-
-
-
 
 
 
@@ -67,7 +63,6 @@ Flight::route('GET /users', function(){
 Flight::route('GET /user/@id', function($id){
         Flight::auth_middleware()->authorizeUserTypes([Roles::ADMIN, Roles::USER]);
               $user = Flight::get('user');
- // Only allow if the requester is the same user or an admin
         if ($user->UserType !== Roles::ADMIN && $user->id != $id) {
             Flight::json(['error' => 'Forbidden: You are not allowed to access this resource.'], 403);
             return;
@@ -79,14 +74,6 @@ Flight::route('GET /user/@id', function($id){
         Flight::json(['error' => $e->getMessage()], $e->getCode());
     }
 });
-
-
-
-
-
-
-
-
 
 
 
@@ -120,7 +107,6 @@ Flight::route('GET /user/@id', function($id){
  *     )
  * )
  */
-
  //Create new user (register) - WORKS!
 Flight::route('POST /user', function(){
     Flight::auth_middleware()->authorizeUserTypes([Roles::ADMIN, Roles::USER]);
@@ -187,6 +173,10 @@ Flight::route('PUT /user/@id', function($id){
 
 
 
+
+
+
+
 /**
  * @OA\Patch(
  *     path="/user/{id}",
@@ -226,7 +216,6 @@ Flight::route('PATCH /user/@id', function($id){
       $user = Flight::get('user');
        $data = Flight::request()->data->getData();
 
- // Only allow if the requester is the same user or an admin
  if ($user->UserType !== Roles::ADMIN && (int)$user->id != (int)$id) {
      Flight::json(['error' => 'Forbidden: You are not allowed to access this resource.'], 403);
      return;

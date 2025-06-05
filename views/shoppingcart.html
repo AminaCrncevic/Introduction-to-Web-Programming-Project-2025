@@ -1,18 +1,7 @@
-
-
-
-        <div class="container2">
+<div class="container2">
             <h1>Shopping Cart</h1>
-            <div class="cart"> <!--
-                <div class="cart-item">
-                    <img src="https://fyf.tac-cdn.net/images/products/small/FYF-116.jpg?auto=webp&quality=80&width=295" alt="Product Image">
-                    <div class="item-details">
-                        <h3>Rose & Lily Celebration</h3>
-                        <p>45$</p>
-                        <div class="quantity">Quantity: <span class="quantity-value">1</span></div> 
-                        <button class="remove1-btn">Remove</button>
-                    </div>
-                </div> -->
+            <div class="cart"> 
+              <!-- 
                 <div class="cart-item">
                     <img src="https://fyf.tac-cdn.net/images/products/small/FYF-122.jpg?auto=webp&quality=80&width=354" alt="Product Image">
                     <div class="item-details">
@@ -21,16 +10,28 @@
                         <div class="quantity">Quantity: <span class="quantity-value">1</span></div> 
                         <button class="remove1-btn">Remove</button>
                     </div>
-                </div>
-                
+                </div>--> 
             </div>
             <div class="cart-total">
                 <h3>Total: 78$</h3>
                 <a href="#checkoutpage" class="checkout-btn">Checkout</a>
             </div>
         </div>
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    
-    <section src="/js/addToCart.js"></section>
-            
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<section src="/js/addToCart.js"></section>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/toastr@2.1.4/build/toastr.min.css" rel="stylesheet">
+<script src="/Introduction-to-Web-Programming-Project-2025/assets/js/jquey.validate.min.js"></script>
+<script src="/Introduction-to-Web-Programming-Project-2025/assets/services/product-service.js"></script>
+<script src="/Introduction-to-Web-Programming-Project-2025/assets/utils/constants.js"></script>
+<script src="/Introduction-to-Web-Programming-Project-2025/assets/services/shoppingcart-service.js"></script>
+<script src="/Introduction-to-Web-Programming-Project-2025/assets/services/cart-service.js"></script>
+<script>
+   $(document).ready(function () {
+    ProductService.init();
+    CartService1.init();
+});
+</script>
+           
     

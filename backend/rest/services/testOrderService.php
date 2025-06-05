@@ -15,11 +15,11 @@ function testOrderService() {
     $productId = 4;
     $quantity = 16;
 
-    // Step 1: Add an item to the order - WORKS!
+    //  Add an item to the order - WORKS!
     $orderService->addItemToOrder($userId, $productId, $quantity);
     echo "Test 1 - addItemToOrder: Item added to order.\n";
 
-    // Step 2: Get pending order items - WORKS!
+    // Get pending order items - WORKS!
     $items = $orderService->getPendingOrderItems($userId);
     echo "Test 2 - getPendingOrderItems: Total items in order: " . count($items) . "\n";
     
