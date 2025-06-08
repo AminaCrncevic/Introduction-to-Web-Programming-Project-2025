@@ -12,6 +12,24 @@ error_reporting(E_ALL);
 Flight::register('orderService', 'OrderService');
 Flight::register('auth_middleware', "AuthMiddleware");
 
+$allowedOrigins = [
+    "http://127.0.0.1:5501",
+   "https://starfish-app-3jszx.ondigitalocean.app/",
+];
+
+if (isset($_SERVER['HTTP_ORIGIN']) && in_array($_SERVER['HTTP_ORIGIN'], $allowedOrigins)) {
+    header("Access-Control-Allow-Origin: " . $_SERVER['HTTP_ORIGIN']);
+} 
+
+header("Access-Control-Allow-Methods: GET, POST, PATCH, DELETE, OPTIONS");
+header("Access-Control-Allow-Headers: Content-Type, Authentication");
+if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
+    http_response_code(204);
+    exit();
+}
+
+
+
 // This wildcard route intercepts all requests and applies authentication checks before proceeding.
 //So everything what comes to backend will come to this route - and we are going to perform authentication here
 Flight::route('/*', function() {
