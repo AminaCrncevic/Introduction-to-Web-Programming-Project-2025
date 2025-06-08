@@ -15,6 +15,7 @@ Flight::register('auth_middleware', "AuthMiddleware");
 $allowedOrigins = [
     "http://127.0.0.1:5501",
    "https://starfish-app-3jszx.ondigitalocean.app/",
+    "https://sea-lion-app-wwmg2.ondigitalocean.app/",
 ];
 
 if (isset($_SERVER['HTTP_ORIGIN']) && in_array($_SERVER['HTTP_ORIGIN'], $allowedOrigins)) {
