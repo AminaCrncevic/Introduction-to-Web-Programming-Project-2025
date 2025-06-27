@@ -58,6 +58,9 @@ class Config
    public static function JWT_SECRET() {
        return Config::get_env("JWT_SECRET", 'f63dc91fc222a683e4fb207ec045ca08cc7a0eb91ad1c2689af75fbbb23a5f6f');
    }
+   public static function OPENAI_API_KEY() {
+        return Config::get_env("OPENAI_API_KEY",'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'); // your actual OpenAI key
+    }
    public static function get_env($name, $default){
        return isset($_ENV[$name]) && trim($_ENV[$name]) != "" ? $_ENV[$name] : $default;
    }
