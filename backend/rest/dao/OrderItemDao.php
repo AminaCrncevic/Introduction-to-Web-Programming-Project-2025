@@ -3,7 +3,7 @@ require_once 'BaseDao.php';
 
 class OrderItemDao extends BaseDao {
     public function __construct() {
-        parent::__construct("OrderItem");
+        parent::__construct("orderitem");
     }
 
 // Get all order items (uses BaseDao's getAll method)
@@ -34,7 +34,7 @@ public function getOrderItemById1($id) {
 
 // Get order items by OrderID - for specific order
 public function getOrderItemsByOrderId($orderId) {
-$stmt = $this->connection->prepare("SELECT * FROM OrderItem WHERE Orders_OrderID = :orderId");
+$stmt = $this->connection->prepare("SELECT * FROM orderitem WHERE Orders_OrderID = :orderId");
 $stmt->bindParam(':orderId', $orderId);
 $stmt->execute();
 return $stmt->fetchAll(); 
@@ -44,9 +44,9 @@ return $stmt->fetchAll();
 // Insert a new order item 
 public function insertOrderItem($orderItemData) {
      $stmt = $this->connection->prepare("
-     INSERT INTO OrderItem (Orders_OrderID, Products_ProductID, Quantity, Price) 
+     INSERT INTO orderitem (Orders_OrderID, Products_ProductID, Quantity, Price) 
             VALUES (:orderId, :productId, :quantity, 
-                (SELECT ProductPrice FROM Products WHERE id = :productId))
+                (SELECT ProductPrice FROM products WHERE id = :productId))
         ");
         $stmt->bindParam(':orderId', $orderItemData['Orders_OrderID'], PDO::PARAM_INT);
         $stmt->bindParam(':productId', $orderItemData['Products_ProductID'], PDO::PARAM_INT);
@@ -63,7 +63,7 @@ public function updateOrderItem($id, $orderItem) {
 // Delete an order item 
 public function deleteOrderItem($orderItemId) {
         $stmt = $this->connection->prepare("
-            DELETE FROM OrderItem WHERE id = :orderItemId
+            DELETE FROM orderitem WHERE id = :orderItemId
         ");
         $stmt->bindParam(':orderItemId', $orderItemId, PDO::PARAM_INT);
         $stmt->execute();
@@ -75,7 +75,7 @@ public function deleteOrderItem($orderItemId) {
 // Get a specific item by OrderID and ProductID
 public function getItemByOrderAndProduct($orderId, $productId) {
     $stmt = $this->connection->prepare("
-        SELECT * FROM OrderItem 
+        SELECT * FROM orderitem 
         WHERE Orders_OrderID = :orderId AND Products_ProductID = :productId
     ");
     $stmt->bindParam(':orderId', $orderId);
@@ -87,7 +87,7 @@ public function getItemByOrderAndProduct($orderId, $productId) {
 // Update the quantity of a specific order item
 public function updateQuantity($orderItemId, $newQuantity) {
     $stmt = $this->connection->prepare("
-        UPDATE `OrderItem` 
+        UPDATE `orderitem` 
         SET `Quantity` = :newQuantity
         WHERE `id` = :orderItemId
     ");
@@ -100,14 +100,14 @@ public function updateQuantity($orderItemId, $newQuantity) {
 /*************************************** */
 // Get all order items for a specific product
 public function getOrderItemsByProductId($productId) {
-    $stmt = $this->connection->prepare("SELECT * FROM OrderItem WHERE Products_ProductID = ?");
+    $stmt = $this->connection->prepare("SELECT * FROM orderitem WHERE Products_ProductID = ?");
     $stmt->execute([$productId]);
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 
 // Update price of an order item
 public function updateOrderItemPrice($orderItemId, $newPrice) {
-    $stmt = $this->connection->prepare("UPDATE OrderItem SET Price = ? WHERE id = ?");
+    $stmt = $this->connection->prepare("UPDATE orderitem SET Price = ? WHERE id = ?");
     $stmt->execute([$newPrice, $orderItemId]);
 }
 
