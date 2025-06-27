@@ -9,9 +9,6 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-Flight::register('orderService', 'OrderService');
-Flight::register('auth_middleware', "AuthMiddleware");
-
 $allowedOrigins = [
     "http://127.0.0.1:5501",
     "https://starfish-app-3jszx.ondigitalocean.app/",
@@ -35,6 +32,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
     http_response_code(204);
     exit();
 }
+
+Flight::register('orderService', 'OrderService');
+Flight::register('auth_middleware', "AuthMiddleware");
+
+
 
 
 
