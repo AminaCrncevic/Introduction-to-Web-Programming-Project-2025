@@ -8,7 +8,7 @@ require_once 'BaseDao.php';
 
 class OrderDao extends BaseDao {
     public function __construct() {
-        parent::__construct("Orders"); 
+        parent::__construct("orders"); 
     }
 
     // Get order by ID
@@ -45,7 +45,7 @@ class OrderDao extends BaseDao {
 
     // Get orders by user ID
     public function getOrdersByUserId($userId) {
-        $stmt = $this->connection->prepare("SELECT * FROM Orders WHERE Users_UserID = :userId");
+        $stmt = $this->connection->prepare("SELECT * FROM orders WHERE Users_UserID = :userId");
         $stmt->bindParam(':userId', $userId);
         $stmt->execute();
         return $stmt->fetchAll();  
@@ -53,7 +53,7 @@ class OrderDao extends BaseDao {
 
         // Get a pending order for a user
     public function getPendingOrderByUserId($userId) {
-     $stmt = $this->connection->prepare("SELECT * FROM Orders WHERE Users_UserID = :userId AND OrderStatus = 'pending'");
+     $stmt = $this->connection->prepare("SELECT * FROM orders WHERE Users_UserID = :userId AND OrderStatus = 'pending'");
     $stmt->bindParam(':userId', $userId, PDO::PARAM_INT);
             $stmt->execute();
             return $stmt->fetch(PDO::FETCH_ASSOC);  // Return the first row (pending order) for the user
