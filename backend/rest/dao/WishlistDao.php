@@ -4,13 +4,13 @@ require_once 'BaseDao.php';
 
 class WishlistDao extends BaseDao {
     public function __construct() {
-        parent::__construct("Wishlist");
+        parent::__construct("wishlist");
     }
 
     //  new wishlist entry for a user
     public function insertWishlist($userId) {
         $stmt = $this->connection->prepare("
-            INSERT INTO Wishlist (Users_UserID) VALUES (:userId)
+            INSERT INTO wishlist (Users_UserID) VALUES (:userId)
         ");
         $stmt->bindParam(':userId', $userId, PDO::PARAM_INT);
         $stmt->execute();
@@ -20,7 +20,7 @@ class WishlistDao extends BaseDao {
     // Get wishlist by user ID 
     public function getWishlistByUserId($userId) {
         $stmt = $this->connection->prepare("
-            SELECT * FROM Wishlist WHERE Users_UserID = :userId
+            SELECT * FROM wishlist WHERE Users_UserID = :userId
         ");
         $stmt->bindParam(':userId', $userId, PDO::PARAM_INT);
         $stmt->execute();
@@ -30,7 +30,7 @@ class WishlistDao extends BaseDao {
     // Delete a wishlist entry by ID (basic CRUD operation)
     public function deleteWishlist($wishlistId) {
         $stmt = $this->connection->prepare("
-            DELETE FROM Wishlist WHERE id = :wishlistId
+            DELETE FROM wishlist WHERE id = :wishlistId
         ");
         $stmt->bindParam(':wishlistId', $wishlistId, PDO::PARAM_INT);
         $stmt->execute();
@@ -38,7 +38,7 @@ class WishlistDao extends BaseDao {
 
     // Get wishlist by ID (basic CRUD operation)
     public function getWishlistById($wishlistId) {
-        $stmt = $this->connection->prepare("SELECT * FROM Wishlist WHERE id = :wishlistId");
+        $stmt = $this->connection->prepare("SELECT * FROM wishlist WHERE id = :wishlistId");
         $stmt->bindParam(':wishlistId', $wishlistId, PDO::PARAM_INT);
         $stmt->execute();
         return $stmt->fetch(PDO::FETCH_ASSOC);
