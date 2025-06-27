@@ -59,7 +59,7 @@ class Config
        return Config::get_env("JWT_SECRET", 'f63dc91fc222a683e4fb207ec045ca08cc7a0eb91ad1c2689af75fbbb23a5f6f');
    }
    public static function OPENAI_API_KEY() {
-        return Config::get_env("OPENAI_API_KEY",'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'); // your actual OpenAI key
+        return Config::get_env("OPENAI_API_KEY",'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'); // your actual OpenAI key
     }
    public static function get_env($name, $default){
        return isset($_ENV[$name]) && trim($_ENV[$name]) != "" ? $_ENV[$name] : $default;
