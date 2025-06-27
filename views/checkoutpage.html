@@ -4,6 +4,23 @@
         <div class="checkout-form">
             <h2>Billing & Shipping Information</h2>
             <form id="checkout-form" method="post">
+                     <!--------------------DODANO ZA DIPLOMSKI-------------------------->
+                <h2>Personalize Your Message</h2>
+         <input type="text" name="recipient_name" placeholder="Recipient's Name" required>
+           <select name="occasion" required>
+           <option value="">Select Occasion</option>
+           <option value="Birthday">Birthday</option>
+        <option value="Anniversary">Anniversary</option>
+    <option value="Sympathy">Sympathy</option>
+       <option value="Congratulations">Congratulations</option>
+</select>
+<select name="tone" required>
+    <option value="">Select Tone</option>
+    <option value="Romantic">Romantic</option>
+    <option value="Friendly">Friendly</option>
+    <option value="Formal">Formal</option>
+</select>
+<!---------------------------------------------------------------------------------->
                 <input type="text" name="name" placeholder="Full Name" required>
                 <input type="email" name="email" placeholder="Email" required>
                 <input type="text" name="address" placeholder="Address" required>
@@ -40,7 +57,8 @@
 <script src="assets/services/checkout-service.js"></script>
 <script>
    $(document).ready(function () {
-    CheckoutService.init();
+    CheckoutService.init();  
+GenerateMessageService.init();
 });
 </script>
            
