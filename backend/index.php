@@ -88,6 +88,9 @@ require_once __DIR__ . '/rest/services/PaymentService.php';
 Flight::register('paymentService', 'PaymentService');
 require_once __DIR__ . '/rest/routes/PaymentRoutes.php';
 
+require_once __DIR__ . '/rest/routes/MessageRoutes.php';
+
+
 
 require_once __DIR__ . '/rest/services/WishlistService.php';
 Flight::register('wishlistService', 'WishlistService');
