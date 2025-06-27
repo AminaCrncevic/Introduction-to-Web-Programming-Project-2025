@@ -3,7 +3,7 @@ require_once 'BaseDao.php';
 
 class ProductDao extends BaseDao {
     public function __construct() {
-        parent::__construct("Products");
+        parent::__construct("products");
     }
 
     // Get product by ID
