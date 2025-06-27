@@ -2,14 +2,14 @@
 require_once 'BaseDao.php';
 class PaymentDao extends BaseDao {
     public function __construct() {
-        parent::__construct("Payments");
+        parent::__construct("payments");
     }
 
 
     // Create a new payment
     public function createPayment($orderId, $amountPaid) {
         $stmt = $this->connection->prepare("
-            INSERT INTO Payments (Orders_OrderID, AmountPaid, PaymentStatus) 
+            INSERT INTO payments (Orders_OrderID, AmountPaid, PaymentStatus) 
             VALUES (:orderId, :amountPaid, 'pending')
         ");
         $stmt->bindParam(':orderId', $orderId, PDO::PARAM_INT);
@@ -20,7 +20,7 @@ class PaymentDao extends BaseDao {
 
     // Get payment details by Order ID
     public function getPaymentByOrderId($orderId) {
-        $stmt = $this->connection->prepare("SELECT * FROM Payments WHERE Orders_OrderID = :orderId");
+        $stmt = $this->connection->prepare("SELECT * FROM payments WHERE Orders_OrderID = :orderId");
         $stmt->bindParam(':orderId', $orderId, PDO::PARAM_INT);
         $stmt->execute();
         return $stmt->fetch(PDO::FETCH_ASSOC);
@@ -30,7 +30,7 @@ class PaymentDao extends BaseDao {
     // Update payment status (e.g., mark as completed)
     public function updatePaymentStatusByOrderID($orderId, $newStatus) {
         $stmt = $this->connection->prepare("
-            UPDATE Payments 
+            UPDATE payments 
             SET PaymentStatus = :newStatus 
             WHERE Orders_OrderID = :orderId
         ");
@@ -41,7 +41,7 @@ class PaymentDao extends BaseDao {
 
     public function updatePaymentStatusByPaymentID($paymentId, $newStatus) {
         $stmt = $this->connection->prepare("
-            UPDATE Payments 
+            UPDATE payments 
             SET PaymentStatus = :newStatus 
             WHERE id = :paymentId
         ");
@@ -75,7 +75,7 @@ class PaymentDao extends BaseDao {
         
         /*************** *//*DELETE PAYMENT BY ID*/ 
     public function delete($id) {
-            $stmt = $this->connection->prepare("DELETE FROM Payments WHERE id = :id");
+            $stmt = $this->connection->prepare("DELETE FROM payments WHERE id = :id");
             $stmt->bindParam(':id', $id);
             $stmt->execute();
         }
@@ -83,7 +83,7 @@ class PaymentDao extends BaseDao {
 
     // Delete a payment for an order
     public function deletePaymentByOrderId($orderId) {
-        $stmt = $this->connection->prepare("DELETE FROM Payments WHERE Orders_OrderID = :orderId");
+        $stmt = $this->connection->prepare("DELETE FROM payments WHERE Orders_OrderID = :orderId");
         $stmt->bindParam(':orderId', $orderId, PDO::PARAM_INT);
         return $stmt->execute();
     }
@@ -91,7 +91,7 @@ class PaymentDao extends BaseDao {
 
      // Update the payment amount
      public function updatePaymentAmount($paymentId, $amountPaid) {
-        $stmt = $this->connection->prepare("UPDATE Payments SET AmountPaid = :amountPaid WHERE id = :paymentId AND PaymentStatus = 'pending'");
+        $stmt = $this->connection->prepare("UPDATE payments SET AmountPaid = :amountPaid WHERE id = :paymentId AND PaymentStatus = 'pending'");
         $stmt->bindParam(':amountPaid', $amountPaid, PDO::PARAM_STR);
         $stmt->bindParam(':paymentId', $paymentId, PDO::PARAM_INT);
         return $stmt->execute();
