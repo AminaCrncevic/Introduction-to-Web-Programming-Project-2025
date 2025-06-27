@@ -58,6 +58,7 @@ const CheckoutService = {
           },
           name_on_card: "Enter name on card"
         },
+        /*
         submitHandler: function (form) {
           $.blockUI({ message: "<h3>Processing Payment...</h3>" });
 
@@ -65,7 +66,52 @@ const CheckoutService = {
             CartService1.completeOrder();
             $.unblockUI(); 
           }, 500);
-        }
+        }*/
+
+
+
+
+
+
+
+
+
+
+submitHandler: function (form) {
+  // Get personalization values
+  const recipient = $(form).find('[name="recipient_name"]').val();
+  const occasion = $(form).find('[name="occasion"]').val();
+  const tone = $(form).find('[name="tone"]').val();
+
+  $.blockUI({ message: "<h3>Generating your personalized message...</h3>" });
+
+  // Step 1: Generate AI Message
+  GenerateMessageService.generateMessage(recipient, occasion, tone, function (error, aiMessage) {
+    if (error) {
+      $.unblockUI();
+      toastr.error("Failed to generate personalized message. Please try again.");
+      return;
+    }
+
+    // Optionally show the message in a styled alert or modal
+    Swal.fire({
+      title: "Your Personalized Message",
+      text: aiMessage,
+      icon: "info",
+      confirmButtonText: "Continue to Payment"
+    }).then(() => {
+      // Step 2: Complete Order
+      $.blockUI({ message: "<h3>Processing Payment...</h3>" });
+
+      setTimeout(() => {
+        CartService1.completeOrder();
+        $.unblockUI();
+        toastr.success("Order completed and message generated!");
+      }, 500);
+    });
+  });
+}
+
       });
     });
   }
