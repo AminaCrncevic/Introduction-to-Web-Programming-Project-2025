@@ -14,16 +14,23 @@ Flight::register('auth_middleware', "AuthMiddleware");
 
 $allowedOrigins = [
     "http://127.0.0.1:5501",
-   "https://starfish-app-3jszx.ondigitalocean.app/",
+    "https://starfish-app-3jszx.ondigitalocean.app/",
     "https://sea-lion-app-wwmg2.ondigitalocean.app/",
 ];
-
+/*
 if (isset($_SERVER['HTTP_ORIGIN']) && in_array($_SERVER['HTTP_ORIGIN'], $allowedOrigins)) {
     header("Access-Control-Allow-Origin: " . $_SERVER['HTTP_ORIGIN']);
-} 
+} */
+if (isset($_SERVER['HTTP_ORIGIN']) && in_array($_SERVER['HTTP_ORIGIN'], $allowedOrigins)) {
+    header("Access-Control-Allow-Origin: " . $_SERVER['HTTP_ORIGIN']);
+    header("Access-Control-Allow-Methods: GET, POST, PATCH, PUT, DELETE, OPTIONS");
+    header("Access-Control-Allow-Headers: Content-Type, Authentication");
+    header("Access-Control-Allow-Credentials: true");
+}
 
+/*
 header("Access-Control-Allow-Methods: GET, POST, PATCH, DELETE, OPTIONS");
-header("Access-Control-Allow-Headers: Content-Type, Authentication");
+header("Access-Control-Allow-Headers: Content-Type, Authentication");*/
 if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
     http_response_code(204);
     exit();
