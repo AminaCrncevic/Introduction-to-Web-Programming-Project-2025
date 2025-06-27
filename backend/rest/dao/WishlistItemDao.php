@@ -5,12 +5,12 @@ require_once 'BaseDao.php';
 class WishlistItemDao extends BaseDao {
 
     public function __construct() {
-        parent::__construct("WishlistItem");
+        parent::__construct("wishlistitem");
     }
 
     // Add item to wishlist 
     public function addWishlistItem($wishlistId, $productId) {
-        $stmt = $this->connection->prepare("INSERT INTO WishlistItem (Wishlist_WishlistID, Products_ProductID) VALUES (:wishlistId, :productId)");
+        $stmt = $this->connection->prepare("INSERT INTO wishlistitem (Wishlist_WishlistID, Products_ProductID) VALUES (:wishlistId, :productId)");
         $stmt->bindParam(':wishlistId', $wishlistId, PDO::PARAM_INT);
         $stmt->bindParam(':productId', $productId, PDO::PARAM_INT);
         $stmt->execute();
@@ -19,8 +19,8 @@ class WishlistItemDao extends BaseDao {
     // Get all items in a wishlist
     public function getWishlistItems($wishlistId) {
         $stmt = $this->connection->prepare("SELECT w.id, p.ProductName, p.ProductPrice, p.ProductImage
-                                            FROM WishlistItem w 
-                                            JOIN Products p ON w.Products_ProductID = p.id 
+                                            FROM wishlistitem w 
+                                            JOIN products p ON w.Products_ProductID = p.id 
                                             WHERE w.Wishlist_WishlistID = :wishlistId");
         $stmt->bindParam(':wishlistId', $wishlistId, PDO::PARAM_INT);
         $stmt->execute();
@@ -29,7 +29,7 @@ class WishlistItemDao extends BaseDao {
 
     // Delete a specific wishlist item
     public function deleteWishlistItem($wishlistItemId) {
-        $stmt = $this->connection->prepare("DELETE FROM WishlistItem WHERE id = :wishlistItemId");
+        $stmt = $this->connection->prepare("DELETE FROM wishlistitem WHERE id = :wishlistItemId");
         $stmt->bindParam(':wishlistItemId', $wishlistItemId, PDO::PARAM_INT);
         $stmt->execute();
     }
@@ -45,7 +45,7 @@ class WishlistItemDao extends BaseDao {
 
     // Update wishlist item (e.g., replace product with a new one)
     public function updateWishlistItem($wishlistItemId, $newProductId) {
-        $stmt = $this->connection->prepare("UPDATE WishlistItem SET Products_ProductID = :newProductId WHERE id = :wishlistItemId");
+        $stmt = $this->connection->prepare("UPDATE wishlistitem SET Products_ProductID = :newProductId WHERE id = :wishlistItemId");
         $stmt->bindParam(':wishlistItemId', $wishlistItemId, PDO::PARAM_INT);
         $stmt->bindParam(':newProductId', $newProductId, PDO::PARAM_INT);
         $stmt->execute();
@@ -53,7 +53,7 @@ class WishlistItemDao extends BaseDao {
 
 
     public function clearWishlistItems($wishlistId) {
-        $stmt = $this->connection->prepare("DELETE FROM WishlistItem WHERE Wishlist_WishlistID = :wishlistId");
+        $stmt = $this->connection->prepare("DELETE FROM wishlistitem WHERE Wishlist_WishlistID = :wishlistId");
         $stmt->bindParam(':wishlistId', $wishlistId, PDO::PARAM_INT);
         $stmt->execute();
     }
