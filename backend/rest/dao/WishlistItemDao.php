@@ -36,7 +36,7 @@ class WishlistItemDao extends BaseDao {
 
     // Check if product already exists in the wishlist (for business logic)
     public function isProductInWishlist($wishlistId, $productId) {
-        $stmt = $this->connection->prepare("SELECT id FROM WishlistItem WHERE Wishlist_WishlistID = :wishlistId AND Products_ProductID = :productId");
+        $stmt = $this->connection->prepare("SELECT id FROM wishlistitem WHERE Wishlist_WishlistID = :wishlistId AND Products_ProductID = :productId");
         $stmt->bindParam(':wishlistId', $wishlistId, PDO::PARAM_INT);
         $stmt->bindParam(':productId', $productId, PDO::PARAM_INT);
         $stmt->execute();
